@@ -6,7 +6,7 @@ import re
 from typing import Any
 
 from rpf_validator.arrowutil import as_param_map, column_python, match_variant, struct_field
-from rpf_validator.contract import load_contract
+from rpf_validator.contract import SUPPORTED_VERSION_STAMPS, contract_for_stamp, load_contract
 from rpf_validator.reader import LoadedFile, LogicalTable
 from rpf_validator.report import Finding, ValidationReport
 from rpf_validator.solved import describe_solved
@@ -43,7 +43,8 @@ def _version_stamp(metadata: dict[str, str]) -> str | None:
 
 
 def check_version(loaded: LoadedFile, contract: dict[str, Any], report: ValidationReport) -> None:
-    supported = set(contract["supported_versions"])
+    del contract
+    supported = set(SUPPORTED_VERSION_STAMPS)
     stamp = _version_stamp(loaded.metadata)
     raptrix = loaded.metadata.get("raptrix.version")
     rpf_version = loaded.metadata.get("rpf_version")
@@ -57,11 +58,11 @@ def check_version(loaded: LoadedFile, contract: dict[str, Any], report: Validati
             f"raptrix.version {raptrix!r} does not match rpf_version {rpf_version!r}",
         )
         return
-    if stamp not in supported:
+    if stamp not in supported or contract_for_stamp(stamp) is None:
         _error(
             report,
             VERSION_UNSUPPORTED,
-            f"version {stamp!r} is not supported; expected {', '.join(contract['supported_versions'])}",
+            f"version {stamp!r} is not supported; expected {', '.join(SUPPORTED_VERSION_STAMPS)}",
         )
 
 
@@ -346,6 +347,22 @@ def check_dynamics(loaded: LoadedFile, contract: dict[str, Any], report: Validat
                 )
 
 
+def _row_detail(table: LogicalTable, row: int) -> str:
+    """Name or circuit id for one equipment row, when the column is present."""
+
+    if table.array is None:
+        return ""
+    bits: list[str] = []
+    for column in ("ckt", "name"):
+        array = struct_field(table.array, column)
+        if array is None:
+            continue
+        values = column_python(array)
+        if row < len(values) and values[row] not in (None, ""):
+            bits.append(f"{column}={values[row]}")
+    return ", ".join(bits)
+
+
 def _int_ids(table: LogicalTable, column: str) -> list[int | None]:
     assert table.array is not None
     array = struct_field(table.array, column)
@@ -376,10 +393,13 @@ def check_bus_references(loaded: LoadedFile, contract: dict[str, Any], report: V
                 if bus_id is None:
                     continue
                 if bus_id not in known:
+                    detail = _row_detail(table, row)
+                    suffix = f" ({detail})" if detail else ""
                     _error(
                         report,
                         BUS_ID_REFERENCE,
-                        f"{table_name}.{column} row {row} references bus_id {bus_id}, which is not in buses",
+                        f"{table_name}.{column} row {row} references bus_id {bus_id}, "
+                        f"which is not in buses{suffix}",
                     )
 
 
@@ -392,17 +412,22 @@ def check_dynamics_generator_warning(loaded: LoadedFile, report: ValidationRepor
     gen_buses = {bus_id for bus_id in _int_ids(generators, "bus_id") if bus_id is not None}
     bus_column = struct_field(dynamics.array, "bus_id")
     gen_column = struct_field(dynamics.array, "gen_id")
+    model_column = struct_field(dynamics.array, "model_type")
     if bus_column is None or gen_column is None:
         return
+    models = column_python(model_column) if model_column is not None else []
     for row, (bus_id, gen_id) in enumerate(
         zip(column_python(bus_column), column_python(gen_column), strict=True)
     ):
         if bus_id is None:
             continue
         if int(bus_id) not in gen_buses:
+            model = models[row] if row < len(models) and models[row] not in (None, "") else None
+            suffix = f", model_type={model}" if model else ""
             _warn(
                 report,
-                f"dynamics_models row {row}: (bus_id={bus_id}, gen_id={gen_id}) has no generators row",
+                f"dynamics_models row {row}: (bus_id={bus_id}, gen_id={gen_id}) "
+                f"has no generators row{suffix}",
             )
 
 

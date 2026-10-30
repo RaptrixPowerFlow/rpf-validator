@@ -1,4 +1,4 @@
-from rpf_validator.contract import load_contract
+from rpf_validator.contract import contract_for_stamp, load_contract
 
 
 def test_snapshot_pin_and_required_tables():
@@ -10,3 +10,9 @@ def test_snapshot_pin_and_required_tables():
     assert len(contract["required_tables"]) == 19
     assert "hour_ahead_advisory" in contract["case_modes"]
     assert "hour_ahead_advisory" in contract["planning_case_modes"]
+
+
+def test_registry_selects_only_the_current_stamp():
+    assert contract_for_stamp("v0.14.5")["snapshot"] == "v0.14.5"
+    assert contract_for_stamp("0.14.5")["snapshot"] == "v0.14.5"
+    assert contract_for_stamp("v0.14.4") is None

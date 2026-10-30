@@ -87,6 +87,47 @@ Solved power flow (actual_solved): 4 bus voltages 1 pu, angle 0 deg; 2 in-servic
 
 The rest of the report lists the version stamp, case mode, solved-state presence, fingerprint, one logical row count per table, and feature flags. `rpf-inspect` describes the file even when validation would fail.
 
+A file stamped with anything other than v0.14.5 fails. The code is stable:
+
+```text
+FAIL path/to/case.rpf
+  VERSION_UNSUPPORTED  version 'v0.14.4' is not supported; expected v0.14.5, 0.14.5
+1 error(s), 0 warning(s)
+```
+
+The repository does not ship a broken golden. The test suite builds that failure from `goldens/planning_tiny.rpf` and checks the code.
+
+## Health report
+
+`rpf-validate` and `rpf-inspect` stay the fast commands. `rpf-health` is optional. It inventories the model, counts islands, and lists structural notes. It does not run a power flow, and its warnings do not change the conformance result.
+
+```bash
+rpf-health goldens/planning_tiny.rpf
+rpf-health --json path/to/case.rpf
+```
+
+```text
+Health report  goldens/planning_tiny.rpf
+conforms to v0.14.5
+
+Inventory
+  4 buses, 3 branches (3 in service), ...
+
+Topology
+  1 island (4 buses)
+  no isolated buses
+
+Solved
+  solved tables: absent
+
+Warnings
+  none
+```
+
+On a solved file the solved section repeats the stored-solution sentence and counts voltages outside the usual bands. v0.14.5 has no branch-flow columns, so the report says the balance check is skipped rather than inventing a residual.
+
+An in-service branch or transformer is one whose `status` is true or non-zero. If that column is missing, the element is treated as in service. A three-winding transformer ties its three winding buses together. A fictional star bus is not an island by itself.
+
 ## Compare with a golden
 
 ```bash
@@ -100,7 +141,7 @@ The fingerprint is compared as a stored string. The validator does not recompute
 ## Library
 
 ```python
-from rpf_validator import compare, summarize, validate
+from rpf_validator import compare, health_report, summarize, validate
 
 report = validate("path/to/case.rpf")
 if not report.ok:
@@ -110,6 +151,7 @@ if not report.ok:
 summary = summarize("path/to/case.rpf")
 print(summary.summary)
 print(summary.solved)
+print(health_report("path/to/case.rpf").to_text())
 
 match = compare("path/to/candidate.rpf", "goldens/solved_tiny.rpf")
 ```

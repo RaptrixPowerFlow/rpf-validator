@@ -1,6 +1,7 @@
 import json
 from pathlib import Path
 
+import pyarrow as pa
 import pytest
 
 from rpf_validator import validate
@@ -17,6 +18,7 @@ from tests.helpers import (
     dynamics_wttqa1_old,
     hour_ahead,
     inflate_bus_rows,
+    replace_table_field,
     rewrite,
     unprefixed_version,
 )
@@ -48,6 +50,29 @@ def test_manifest_matches_golden_summaries():
 def _codes(path: Path) -> set[str]:
     report = validate(path)
     return {item.code for item in report.errors if item.code}
+
+
+def test_bus_reference_message_includes_circuit(tmp_path):
+    dest = tmp_path / "bus.rpf"
+    rewrite(GOLDENS / "planning_tiny.rpf", dest, bad_branch_bus)
+    report = validate(dest)
+    message = next(item.message for item in report.errors if item.code == "BUS_ID_REFERENCE")
+    assert "ckt=1" in message
+
+
+def test_unmatched_dynamics_warning_includes_model_type(tmp_path):
+    def orphan(schema, batch):
+        table_index = schema.get_field_index("dynamics_models")
+        struct = batch.column(table_index)
+        field_index = struct.type.get_field_index("bus_id")
+        values = struct.field(field_index).to_pylist()
+        values[0] = 9999
+        return replace_table_field(schema, batch, "dynamics_models", "bus_id", pa.array(values, type=pa.int32()))
+
+    dest = tmp_path / "orphan.rpf"
+    rewrite(GOLDENS / "planning_tiny.rpf", dest, orphan)
+    report = validate(dest)
+    assert any("model_type=GENCLS" in item.message for item in report.warnings)
 
 
 def test_negative_mutations(tmp_path):

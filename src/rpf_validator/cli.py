@@ -6,7 +6,7 @@ import argparse
 import json
 import sys
 
-from rpf_validator import compare, summarize, validate
+from rpf_validator import compare, health_report, summarize, validate
 from rpf_validator.reader import RpfReadError
 
 
@@ -47,6 +47,21 @@ def validate_main(argv: list[str] | None = None) -> None:
 
     failed = not report.ok or (comparison is not None and not comparison.ok)
     raise SystemExit(1 if failed else 0)
+
+
+def health_main(argv: list[str] | None = None) -> None:
+    parser = _parser("rpf-health")
+    args = parser.parse_args(argv)
+    try:
+        report = health_report(args.file)
+    except RpfReadError as exc:
+        print(exc, file=sys.stderr)
+        raise SystemExit(2) from exc
+    if args.json:
+        print(json.dumps(report.to_dict(), indent=2))
+    else:
+        print(report.to_text())
+    raise SystemExit(0)
 
 
 def inspect_main(argv: list[str] | None = None) -> None:
