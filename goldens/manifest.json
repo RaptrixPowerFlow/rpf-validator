@@ -1,0 +1,82 @@
+{
+  "source_commit": "0d4d48f",
+  "files": {
+    "planning_tiny.rpf": {
+      "case_mode": "flat_start_planning",
+      "fingerprint": "1111111111111111111111111111111111111111111111111111111111111111",
+      "rows": {
+        "metadata": 1,
+        "buses": 4,
+        "branches": 3,
+        "multi_section_lines": 0,
+        "dc_lines_2w": 0,
+        "generators": 2,
+        "loads": 2,
+        "fixed_shunts": 0,
+        "switched_shunts": 0,
+        "switched_shunt_banks": 0,
+        "transformers_2w": 0,
+        "transformers_3w": 0,
+        "areas": 0,
+        "zones": 0,
+        "owners": 0,
+        "contingencies": 0,
+        "interfaces": 0,
+        "dynamics_models": 1,
+        "dc_converters": 0
+      }
+    },
+    "contingency_tiny.rpf": {
+      "case_mode": "flat_start_planning",
+      "fingerprint": "2222222222222222222222222222222222222222222222222222222222222222",
+      "rows": {
+        "metadata": 1,
+        "buses": 4,
+        "branches": 3,
+        "multi_section_lines": 0,
+        "dc_lines_2w": 0,
+        "generators": 2,
+        "loads": 2,
+        "fixed_shunts": 0,
+        "switched_shunts": 0,
+        "switched_shunt_banks": 0,
+        "transformers_2w": 0,
+        "transformers_3w": 0,
+        "areas": 0,
+        "zones": 0,
+        "owners": 0,
+        "contingencies": 1,
+        "interfaces": 0,
+        "dynamics_models": 1,
+        "dc_converters": 0
+      }
+    },
+    "solved_tiny.rpf": {
+      "case_mode": "solved_snapshot",
+      "fingerprint": "3333333333333333333333333333333333333333333333333333333333333333",
+      "rows": {
+        "metadata": 1,
+        "buses": 4,
+        "branches": 3,
+        "multi_section_lines": 0,
+        "dc_lines_2w": 0,
+        "generators": 2,
+        "loads": 2,
+        "fixed_shunts": 0,
+        "switched_shunts": 0,
+        "switched_shunt_banks": 0,
+        "transformers_2w": 0,
+        "transformers_3w": 0,
+        "areas": 0,
+        "zones": 0,
+        "owners": 0,
+        "contingencies": 0,
+        "interfaces": 0,
+        "dynamics_models": 1,
+        "dc_converters": 0,
+        "buses_solved": 4,
+        "generators_solved": 2
+      }
+    }
+  }
+}

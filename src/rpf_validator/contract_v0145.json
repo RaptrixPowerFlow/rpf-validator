@@ -1,0 +1,6712 @@
+{
+  "aliases": {
+    "dynamics": "dynamics_models"
+  },
+  "bus_reference_columns": {
+    "branches": [
+      "from_bus_id",
+      "to_bus_id"
+    ],
+    "generators": [
+      "bus_id"
+    ],
+    "loads": [
+      "bus_id"
+    ],
+    "transformers_2w": [
+      "from_bus_id",
+      "to_bus_id"
+    ],
+    "transformers_3w": [
+      "bus_h_id",
+      "bus_m_id",
+      "bus_l_id"
+    ]
+  },
+  "canonical_tables": [
+    "metadata",
+    "buses",
+    "branches",
+    "multi_section_lines",
+    "dc_lines_2w",
+    "generators",
+    "loads",
+    "fixed_shunts",
+    "switched_shunts",
+    "switched_shunt_banks",
+    "transformers_2w",
+    "transformers_3w",
+    "areas",
+    "zones",
+    "owners",
+    "contingencies",
+    "interfaces",
+    "dynamics_models"
+  ],
+  "case_modes": [
+    "flat_start_planning",
+    "warm_start_planning",
+    "solved_snapshot",
+    "hour_ahead_advisory"
+  ],
+  "diagram_tables": [
+    "diagram_objects",
+    "diagram_points"
+  ],
+  "dynamics": {
+    "provenance_keys": [
+      "source_dyr",
+      "source_dy",
+      "params_named",
+      "icon_count",
+      "con_count",
+      "dict_code",
+      "token_count_mismatch",
+      "source_cim_class",
+      "psse_equiv",
+      "model_mapped",
+      "source_eq_fallback",
+      "source_stub"
+    ],
+    "wttqa1_illegal_keys": [
+      "p1",
+      "p2",
+      "p3",
+      "p4"
+    ],
+    "wttqa1_model": "WTTQA1"
+  },
+  "feature_flag_tables": {
+    "raptrix.features.contingency_island_analysis": [
+      "contingency_island_analysis"
+    ],
+    "raptrix.features.contingency_sequences": [
+      "contingency_sequences"
+    ],
+    "raptrix.features.facts": [
+      "facts_devices"
+    ],
+    "raptrix.features.node_breaker": [
+      "node_breaker_detail",
+      "switch_detail",
+      "connectivity_nodes"
+    ],
+    "raptrix.features.protection_contingencies": [
+      "protection_contingencies"
+    ],
+    "raptrix.features.remedial_action_schemes": [
+      "remedial_action_schemes"
+    ]
+  },
+  "optional_tables": [
+    "contingency_island_analysis",
+    "contingency_sequences",
+    "computational_load_profiles",
+    "facts_devices",
+    "scenario_context",
+    "protection_contingencies",
+    "topology_changes",
+    "remedial_action_schemes",
+    "connectivity_groups",
+    "node_breaker_detail",
+    "switch_detail",
+    "connectivity_nodes",
+    "diagram_objects",
+    "diagram_points",
+    "buses_solved",
+    "generators_solved",
+    "switched_shunts_solved",
+    "facts_solved",
+    "q_limits_solved",
+    "feasibility_certificate_buses"
+  ],
+  "planning_case_modes": [
+    "flat_start_planning",
+    "warm_start_planning",
+    "hour_ahead_advisory"
+  ],
+  "required_tables": [
+    "metadata",
+    "buses",
+    "branches",
+    "multi_section_lines",
+    "dc_lines_2w",
+    "generators",
+    "loads",
+    "fixed_shunts",
+    "switched_shunts",
+    "switched_shunt_banks",
+    "transformers_2w",
+    "transformers_3w",
+    "areas",
+    "zones",
+    "owners",
+    "contingencies",
+    "interfaces",
+    "dynamics_models",
+    "dc_converters"
+  ],
+  "schema_version": "v0.14.5",
+  "snapshot": "v0.14.5",
+  "solved_state_presence": [
+    "actual_solved",
+    "not_available",
+    "not_computed",
+    "seed_only"
+  ],
+  "solved_tables": [
+    "buses_solved",
+    "generators_solved",
+    "switched_shunts_solved"
+  ],
+  "source_commit": "0d4d48f",
+  "source_repo": "https://github.com/RaptrixPowerFlow/raptrix-cim-rs",
+  "supported_versions": [
+    "v0.14.5",
+    "0.14.5"
+  ],
+  "tables": {
+    "areas": [
+      {
+        "fields": [
+          {
+            "name": "area_id",
+            "nullable": false,
+            "type": {
+              "kind": "int32"
+            }
+          },
+          {
+            "name": "name",
+            "nullable": false,
+            "type": {
+              "key": {
+                "kind": "int32"
+              },
+              "kind": "dictionary",
+              "value": {
+                "kind": "utf8"
+              }
+            }
+          },
+          {
+            "name": "interchange_mw",
+            "nullable": true,
+            "type": {
+              "kind": "float64"
+            }
+          }
+        ]
+      }
+    ],
+    "branches": [
+      {
+        "fields": [
+          {
+            "name": "branch_id",
+            "nullable": false,
+            "type": {
+              "kind": "int32"
+            }
+          },
+          {
+            "name": "from_bus_id",
+            "nullable": false,
+            "type": {
+              "kind": "int32"
+            }
+          },
+          {
+            "name": "to_bus_id",
+            "nullable": false,
+            "type": {
+              "kind": "int32"
+            }
+          },
+          {
+            "name": "ckt",
+            "nullable": false,
+            "type": {
+              "key": {
+                "kind": "int32"
+              },
+              "kind": "dictionary",
+              "value": {
+                "kind": "utf8"
+              }
+            }
+          },
+          {
+            "name": "r",
+            "nullable": false,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "x",
+            "nullable": false,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "b_shunt",
+            "nullable": false,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "tap",
+            "nullable": false,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "phase",
+            "nullable": false,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "rate_a",
+            "nullable": false,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "rate_b",
+            "nullable": false,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "rate_c",
+            "nullable": false,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "status",
+            "nullable": false,
+            "type": {
+              "kind": "bool"
+            }
+          },
+          {
+            "name": "owner_id",
+            "nullable": true,
+            "type": {
+              "kind": "int32"
+            }
+          },
+          {
+            "name": "name",
+            "nullable": true,
+            "type": {
+              "key": {
+                "kind": "uint32"
+              },
+              "kind": "dictionary",
+              "value": {
+                "kind": "utf8"
+              }
+            }
+          },
+          {
+            "name": "from_nominal_kv",
+            "nullable": false,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "to_nominal_kv",
+            "nullable": false,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "device_type",
+            "nullable": true,
+            "type": {
+              "key": {
+                "kind": "int32"
+              },
+              "kind": "dictionary",
+              "value": {
+                "kind": "utf8"
+              }
+            }
+          },
+          {
+            "name": "control_mode",
+            "nullable": true,
+            "type": {
+              "key": {
+                "kind": "int32"
+              },
+              "kind": "dictionary",
+              "value": {
+                "kind": "utf8"
+              }
+            }
+          },
+          {
+            "name": "control_target_flow_mw",
+            "nullable": true,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "x_min_pu",
+            "nullable": true,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "x_max_pu",
+            "nullable": true,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "injected_voltage_mag_pu",
+            "nullable": true,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "injected_voltage_angle_deg",
+            "nullable": true,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "facts_params",
+            "nullable": true,
+            "type": {
+              "entries": {
+                "fields": [
+                  {
+                    "name": "key",
+                    "nullable": false,
+                    "type": {
+                      "kind": "utf8"
+                    }
+                  },
+                  {
+                    "name": "value",
+                    "nullable": false,
+                    "type": {
+                      "kind": "float64"
+                    }
+                  }
+                ],
+                "kind": "struct"
+              },
+              "entry_name": "entries",
+              "entry_nullable": false,
+              "keys_sorted": false,
+              "kind": "map"
+            }
+          },
+          {
+            "name": "parent_line_id",
+            "nullable": true,
+            "type": {
+              "kind": "int32"
+            }
+          },
+          {
+            "name": "section_index",
+            "nullable": true,
+            "type": {
+              "kind": "int32"
+            }
+          },
+          {
+            "name": "mrid",
+            "nullable": true,
+            "type": {
+              "kind": "utf8"
+            }
+          },
+          {
+            "name": "is_secured",
+            "nullable": true,
+            "type": {
+              "kind": "bool"
+            }
+          },
+          {
+            "name": "is_bes",
+            "nullable": true,
+            "type": {
+              "kind": "bool"
+            }
+          },
+          {
+            "name": "is_bps",
+            "nullable": true,
+            "type": {
+              "kind": "bool"
+            }
+          },
+          {
+            "name": "is_bptf",
+            "nullable": true,
+            "type": {
+              "kind": "bool"
+            }
+          },
+          {
+            "name": "g_from",
+            "nullable": true,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "b_from",
+            "nullable": true,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "g_to",
+            "nullable": true,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "b_to",
+            "nullable": true,
+            "type": {
+              "kind": "float64"
+            }
+          }
+        ]
+      }
+    ],
+    "buses": [
+      {
+        "fields": [
+          {
+            "name": "bus_id",
+            "nullable": false,
+            "type": {
+              "kind": "int32"
+            }
+          },
+          {
+            "name": "name",
+            "nullable": false,
+            "type": {
+              "key": {
+                "kind": "int32"
+              },
+              "kind": "dictionary",
+              "value": {
+                "kind": "utf8"
+              }
+            }
+          },
+          {
+            "name": "type",
+            "nullable": false,
+            "type": {
+              "key": {
+                "kind": "int32"
+              },
+              "kind": "dictionary",
+              "value": {
+                "kind": "utf8"
+              }
+            }
+          },
+          {
+            "name": "p_sched",
+            "nullable": false,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "q_sched",
+            "nullable": false,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "v_mag_set",
+            "nullable": false,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "v_ang_set",
+            "nullable": false,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "q_min",
+            "nullable": false,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "q_max",
+            "nullable": false,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "g_shunt",
+            "nullable": false,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "b_shunt",
+            "nullable": false,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "area",
+            "nullable": false,
+            "type": {
+              "kind": "int32"
+            }
+          },
+          {
+            "name": "zone",
+            "nullable": false,
+            "type": {
+              "kind": "int32"
+            }
+          },
+          {
+            "name": "owner_id",
+            "nullable": true,
+            "type": {
+              "kind": "int32"
+            }
+          },
+          {
+            "name": "v_min",
+            "nullable": false,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "v_max",
+            "nullable": false,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "p_min_agg",
+            "nullable": false,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "p_max_agg",
+            "nullable": false,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "nominal_kv",
+            "nullable": false,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "bus_uuid",
+            "nullable": false,
+            "type": {
+              "key": {
+                "kind": "int32"
+              },
+              "kind": "dictionary",
+              "value": {
+                "kind": "utf8"
+              }
+            }
+          },
+          {
+            "name": "qd_load_pu",
+            "nullable": false,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "qg_sched_pu",
+            "nullable": false,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "latitude",
+            "nullable": true,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "longitude",
+            "nullable": true,
+            "type": {
+              "kind": "float64"
+            }
+          }
+        ]
+      }
+    ],
+    "buses_solved": [
+      {
+        "fields": [
+          {
+            "name": "bus_id",
+            "nullable": false,
+            "type": {
+              "kind": "int32"
+            }
+          },
+          {
+            "name": "v_mag_pu",
+            "nullable": true,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "v_ang_deg",
+            "nullable": true,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "p_inj_pu",
+            "nullable": true,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "q_inj_pu",
+            "nullable": true,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "bus_type_solved",
+            "nullable": true,
+            "type": {
+              "key": {
+                "kind": "int32"
+              },
+              "kind": "dictionary",
+              "value": {
+                "kind": "utf8"
+              }
+            }
+          },
+          {
+            "name": "provenance",
+            "nullable": true,
+            "type": {
+              "key": {
+                "kind": "int32"
+              },
+              "kind": "dictionary",
+              "value": {
+                "kind": "utf8"
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "computational_load_profiles": [
+      {
+        "fields": [
+          {
+            "name": "bus_id",
+            "nullable": true,
+            "type": {
+              "kind": "int32"
+            }
+          },
+          {
+            "name": "load_id",
+            "nullable": true,
+            "type": {
+              "key": {
+                "kind": "int32"
+              },
+              "kind": "dictionary",
+              "value": {
+                "kind": "utf8"
+              }
+            }
+          },
+          {
+            "name": "seasonal_envelope",
+            "nullable": true,
+            "type": {
+              "item": {
+                "fields": [
+                  {
+                    "name": "season",
+                    "nullable": false,
+                    "type": {
+                      "kind": "utf8"
+                    }
+                  },
+                  {
+                    "name": "min_mw",
+                    "nullable": false,
+                    "type": {
+                      "kind": "float32"
+                    }
+                  },
+                  {
+                    "name": "max_mw",
+                    "nullable": false,
+                    "type": {
+                      "kind": "float32"
+                    }
+                  },
+                  {
+                    "name": "pf",
+                    "nullable": false,
+                    "type": {
+                      "kind": "float32"
+                    }
+                  }
+                ],
+                "kind": "struct"
+              },
+              "item_name": "item",
+              "item_nullable": false,
+              "kind": "list"
+            }
+          },
+          {
+            "name": "buildout_schedule",
+            "nullable": true,
+            "type": {
+              "item": {
+                "fields": [
+                  {
+                    "name": "year",
+                    "nullable": false,
+                    "type": {
+                      "kind": "int32"
+                    }
+                  },
+                  {
+                    "name": "mw",
+                    "nullable": false,
+                    "type": {
+                      "kind": "float32"
+                    }
+                  }
+                ],
+                "kind": "struct"
+              },
+              "item_name": "item",
+              "item_nullable": false,
+              "kind": "list"
+            }
+          },
+          {
+            "name": "ramp_rate_up_mw_per_min",
+            "nullable": true,
+            "type": {
+              "kind": "float32"
+            }
+          },
+          {
+            "name": "ramp_rate_down_mw_per_min",
+            "nullable": true,
+            "type": {
+              "kind": "float32"
+            }
+          },
+          {
+            "name": "it_load_percent",
+            "nullable": true,
+            "type": {
+              "kind": "float32"
+            }
+          },
+          {
+            "name": "non_it_load_percent",
+            "nullable": true,
+            "type": {
+              "kind": "float32"
+            }
+          },
+          {
+            "name": "it_allocation_mode",
+            "nullable": true,
+            "type": {
+              "key": {
+                "kind": "int32"
+              },
+              "kind": "dictionary",
+              "value": {
+                "kind": "utf8"
+              }
+            }
+          },
+          {
+            "name": "ups_config",
+            "nullable": true,
+            "type": {
+              "entries": {
+                "fields": [
+                  {
+                    "name": "key",
+                    "nullable": false,
+                    "type": {
+                      "kind": "utf8"
+                    }
+                  },
+                  {
+                    "name": "value",
+                    "nullable": false,
+                    "type": {
+                      "kind": "float64"
+                    }
+                  }
+                ],
+                "kind": "struct"
+              },
+              "entry_name": "entries",
+              "entry_nullable": false,
+              "keys_sorted": false,
+              "kind": "map"
+            }
+          },
+          {
+            "name": "pcc_relay_settings",
+            "nullable": true,
+            "type": {
+              "entries": {
+                "fields": [
+                  {
+                    "name": "key",
+                    "nullable": false,
+                    "type": {
+                      "kind": "utf8"
+                    }
+                  },
+                  {
+                    "name": "value",
+                    "nullable": false,
+                    "type": {
+                      "kind": "float64"
+                    }
+                  }
+                ],
+                "kind": "struct"
+              },
+              "entry_name": "entries",
+              "entry_nullable": false,
+              "keys_sorted": false,
+              "kind": "map"
+            }
+          },
+          {
+            "name": "onsite_gen_bess_mw",
+            "nullable": true,
+            "type": {
+              "kind": "float32"
+            }
+          },
+          {
+            "name": "onsite_gen_parallel",
+            "nullable": true,
+            "type": {
+              "kind": "bool"
+            }
+          },
+          {
+            "name": "bess_ramp_rate_mw_per_min",
+            "nullable": true,
+            "type": {
+              "kind": "float32"
+            }
+          },
+          {
+            "name": "facility_use_case_percent",
+            "nullable": true,
+            "type": {
+              "entries": {
+                "fields": [
+                  {
+                    "name": "key",
+                    "nullable": false,
+                    "type": {
+                      "kind": "utf8"
+                    }
+                  },
+                  {
+                    "name": "value",
+                    "nullable": false,
+                    "type": {
+                      "kind": "float64"
+                    }
+                  }
+                ],
+                "kind": "struct"
+              },
+              "entry_name": "entries",
+              "entry_nullable": false,
+              "keys_sorted": false,
+              "kind": "map"
+            }
+          },
+          {
+            "name": "mrid",
+            "nullable": true,
+            "type": {
+              "kind": "utf8"
+            }
+          },
+          {
+            "name": "poi_name",
+            "nullable": true,
+            "type": {
+              "kind": "utf8"
+            }
+          },
+          {
+            "name": "facility_class",
+            "nullable": true,
+            "type": {
+              "key": {
+                "kind": "int32"
+              },
+              "kind": "dictionary",
+              "value": {
+                "kind": "utf8"
+              }
+            }
+          },
+          {
+            "name": "priority",
+            "nullable": true,
+            "type": {
+              "kind": "int32"
+            }
+          },
+          {
+            "name": "max_step_drop_mw",
+            "nullable": true,
+            "type": {
+              "kind": "float32"
+            }
+          },
+          {
+            "name": "trip_study_percentiles",
+            "nullable": true,
+            "type": {
+              "item": {
+                "kind": "float32"
+              },
+              "item_name": "item",
+              "item_nullable": false,
+              "kind": "list"
+            }
+          },
+          {
+            "name": "common_mode_group",
+            "nullable": true,
+            "type": {
+              "kind": "utf8"
+            }
+          },
+          {
+            "name": "voltage_sensitivity_hint",
+            "nullable": true,
+            "type": {
+              "kind": "float32"
+            }
+          },
+          {
+            "name": "transfer_to_backup_threshold_pu",
+            "nullable": true,
+            "type": {
+              "kind": "float32"
+            }
+          },
+          {
+            "name": "transfer_delay_ms",
+            "nullable": true,
+            "type": {
+              "kind": "float32"
+            }
+          },
+          {
+            "name": "reconnection_criteria",
+            "nullable": true,
+            "type": {
+              "entries": {
+                "fields": [
+                  {
+                    "name": "key",
+                    "nullable": false,
+                    "type": {
+                      "kind": "utf8"
+                    }
+                  },
+                  {
+                    "name": "value",
+                    "nullable": false,
+                    "type": {
+                      "kind": "float64"
+                    }
+                  }
+                ],
+                "kind": "struct"
+              },
+              "entry_name": "entries",
+              "entry_nullable": false,
+              "keys_sorted": false,
+              "kind": "map"
+            }
+          },
+          {
+            "name": "ride_through_capability",
+            "nullable": true,
+            "type": {
+              "entries": {
+                "fields": [
+                  {
+                    "name": "key",
+                    "nullable": false,
+                    "type": {
+                      "kind": "utf8"
+                    }
+                  },
+                  {
+                    "name": "value",
+                    "nullable": false,
+                    "type": {
+                      "kind": "float64"
+                    }
+                  }
+                ],
+                "kind": "struct"
+              },
+              "entry_name": "entries",
+              "entry_nullable": false,
+              "keys_sorted": false,
+              "kind": "map"
+            }
+          },
+          {
+            "name": "voltage_transfer_curve",
+            "nullable": true,
+            "type": {
+              "item": {
+                "fields": [
+                  {
+                    "name": "v_pu",
+                    "nullable": false,
+                    "type": {
+                      "kind": "float32"
+                    }
+                  },
+                  {
+                    "name": "t_ms",
+                    "nullable": false,
+                    "type": {
+                      "kind": "float32"
+                    }
+                  },
+                  {
+                    "name": "polarity",
+                    "nullable": false,
+                    "type": {
+                      "key": {
+                        "kind": "int32"
+                      },
+                      "kind": "dictionary",
+                      "value": {
+                        "kind": "utf8"
+                      }
+                    }
+                  },
+                  {
+                    "name": "action",
+                    "nullable": false,
+                    "type": {
+                      "key": {
+                        "kind": "int32"
+                      },
+                      "kind": "dictionary",
+                      "value": {
+                        "kind": "utf8"
+                      }
+                    }
+                  },
+                  {
+                    "name": "mw_fraction",
+                    "nullable": true,
+                    "type": {
+                      "kind": "float32"
+                    }
+                  },
+                  {
+                    "name": "load_class",
+                    "nullable": true,
+                    "type": {
+                      "key": {
+                        "kind": "int32"
+                      },
+                      "kind": "dictionary",
+                      "value": {
+                        "kind": "utf8"
+                      }
+                    }
+                  }
+                ],
+                "kind": "struct"
+              },
+              "item_name": "item",
+              "item_nullable": false,
+              "kind": "list"
+            }
+          },
+          {
+            "name": "disturbance_counter",
+            "nullable": true,
+            "type": {
+              "fields": [
+                {
+                  "name": "strike_limit",
+                  "nullable": true,
+                  "type": {
+                    "kind": "int32"
+                  }
+                },
+                {
+                  "name": "window_sec",
+                  "nullable": true,
+                  "type": {
+                    "kind": "float32"
+                  }
+                },
+                {
+                  "name": "qualifying_v_pu",
+                  "nullable": true,
+                  "type": {
+                    "kind": "float32"
+                  }
+                },
+                {
+                  "name": "qualifying_duration_ms",
+                  "nullable": true,
+                  "type": {
+                    "kind": "float32"
+                  }
+                },
+                {
+                  "name": "latch_permanent",
+                  "nullable": true,
+                  "type": {
+                    "kind": "bool"
+                  }
+                }
+              ],
+              "kind": "struct"
+            }
+          },
+          {
+            "name": "reconnection_params",
+            "nullable": true,
+            "type": {
+              "fields": [
+                {
+                  "name": "v_recover_pu",
+                  "nullable": true,
+                  "type": {
+                    "kind": "float32"
+                  }
+                },
+                {
+                  "name": "delay_ms",
+                  "nullable": true,
+                  "type": {
+                    "kind": "float32"
+                  }
+                },
+                {
+                  "name": "ramp_mw_per_min",
+                  "nullable": true,
+                  "type": {
+                    "kind": "float32"
+                  }
+                },
+                {
+                  "name": "manual_reset_required",
+                  "nullable": true,
+                  "type": {
+                    "kind": "bool"
+                  }
+                },
+                {
+                  "name": "restore_fraction",
+                  "nullable": true,
+                  "type": {
+                    "kind": "float32"
+                  }
+                },
+                {
+                  "name": "restore_time_s",
+                  "nullable": true,
+                  "type": {
+                    "kind": "float32"
+                  }
+                }
+              ],
+              "kind": "struct"
+            }
+          },
+          {
+            "name": "voltage_measurement",
+            "nullable": true,
+            "type": {
+              "fields": [
+                {
+                  "name": "basis",
+                  "nullable": true,
+                  "type": {
+                    "key": {
+                      "kind": "int32"
+                    },
+                    "kind": "dictionary",
+                    "value": {
+                      "kind": "utf8"
+                    }
+                  }
+                },
+                {
+                  "name": "filter_time_constant_ms",
+                  "nullable": true,
+                  "type": {
+                    "kind": "float32"
+                  }
+                },
+                {
+                  "name": "location",
+                  "nullable": true,
+                  "type": {
+                    "key": {
+                      "kind": "int32"
+                    },
+                    "kind": "dictionary",
+                    "value": {
+                      "kind": "utf8"
+                    }
+                  }
+                },
+                {
+                  "name": "reset_hysteresis_pu",
+                  "nullable": true,
+                  "type": {
+                    "kind": "float32"
+                  }
+                }
+              ],
+              "kind": "struct"
+            }
+          },
+          {
+            "name": "protection_settings_provenance",
+            "nullable": true,
+            "type": {
+              "fields": [
+                {
+                  "name": "source",
+                  "nullable": true,
+                  "type": {
+                    "key": {
+                      "kind": "int32"
+                    },
+                    "kind": "dictionary",
+                    "value": {
+                      "kind": "utf8"
+                    }
+                  }
+                },
+                {
+                  "name": "profile_id",
+                  "nullable": true,
+                  "type": {
+                    "kind": "utf8"
+                  }
+                },
+                {
+                  "name": "effective_date",
+                  "nullable": true,
+                  "type": {
+                    "kind": "timestamp",
+                    "tz": "UTC",
+                    "unit": "us"
+                  }
+                }
+              ],
+              "kind": "struct"
+            }
+          },
+          {
+            "name": "frequency_transfer_curve",
+            "nullable": true,
+            "type": {
+              "item": {
+                "fields": [
+                  {
+                    "name": "f_hz",
+                    "nullable": false,
+                    "type": {
+                      "kind": "float32"
+                    }
+                  },
+                  {
+                    "name": "t_ms",
+                    "nullable": false,
+                    "type": {
+                      "kind": "float32"
+                    }
+                  },
+                  {
+                    "name": "polarity",
+                    "nullable": false,
+                    "type": {
+                      "key": {
+                        "kind": "int32"
+                      },
+                      "kind": "dictionary",
+                      "value": {
+                        "kind": "utf8"
+                      }
+                    }
+                  },
+                  {
+                    "name": "action",
+                    "nullable": false,
+                    "type": {
+                      "key": {
+                        "kind": "int32"
+                      },
+                      "kind": "dictionary",
+                      "value": {
+                        "kind": "utf8"
+                      }
+                    }
+                  },
+                  {
+                    "name": "mw_fraction",
+                    "nullable": true,
+                    "type": {
+                      "kind": "float32"
+                    }
+                  },
+                  {
+                    "name": "load_class",
+                    "nullable": true,
+                    "type": {
+                      "key": {
+                        "kind": "int32"
+                      },
+                      "kind": "dictionary",
+                      "value": {
+                        "kind": "utf8"
+                      }
+                    }
+                  }
+                ],
+                "kind": "struct"
+              },
+              "item_name": "item",
+              "item_nullable": false,
+              "kind": "list"
+            }
+          },
+          {
+            "name": "ride_through_requirement",
+            "nullable": true,
+            "type": {
+              "fields": [
+                {
+                  "name": "voltage_bands",
+                  "nullable": true,
+                  "type": {
+                    "item": {
+                      "fields": [
+                        {
+                          "name": "v_low_pu",
+                          "nullable": false,
+                          "type": {
+                            "kind": "float32"
+                          }
+                        },
+                        {
+                          "name": "v_high_pu",
+                          "nullable": false,
+                          "type": {
+                            "kind": "float32"
+                          }
+                        },
+                        {
+                          "name": "t_ms",
+                          "nullable": true,
+                          "type": {
+                            "kind": "float32"
+                          }
+                        }
+                      ],
+                      "kind": "struct"
+                    },
+                    "item_name": "item",
+                    "item_nullable": false,
+                    "kind": "list"
+                  }
+                },
+                {
+                  "name": "frequency_bands",
+                  "nullable": true,
+                  "type": {
+                    "item": {
+                      "fields": [
+                        {
+                          "name": "f_low_hz",
+                          "nullable": false,
+                          "type": {
+                            "kind": "float32"
+                          }
+                        },
+                        {
+                          "name": "f_high_hz",
+                          "nullable": false,
+                          "type": {
+                            "kind": "float32"
+                          }
+                        },
+                        {
+                          "name": "t_ms",
+                          "nullable": true,
+                          "type": {
+                            "kind": "float32"
+                          }
+                        }
+                      ],
+                      "kind": "struct"
+                    },
+                    "item_name": "item",
+                    "item_nullable": false,
+                    "kind": "list"
+                  }
+                }
+              ],
+              "kind": "struct"
+            }
+          }
+        ]
+      }
+    ],
+    "connectivity_groups": [
+      {
+        "fields": [
+          {
+            "name": "topological_bus_id",
+            "nullable": false,
+            "type": {
+              "kind": "int32"
+            }
+          },
+          {
+            "name": "topological_node_mrid",
+            "nullable": false,
+            "type": {
+              "key": {
+                "kind": "int32"
+              },
+              "kind": "dictionary",
+              "value": {
+                "kind": "utf8"
+              }
+            }
+          },
+          {
+            "name": "connectivity_node_mrids",
+            "nullable": false,
+            "type": {
+              "item": {
+                "kind": "utf8"
+              },
+              "item_name": "item",
+              "item_nullable": false,
+              "kind": "list"
+            }
+          },
+          {
+            "name": "connectivity_count",
+            "nullable": false,
+            "type": {
+              "kind": "int32"
+            }
+          }
+        ]
+      }
+    ],
+    "connectivity_nodes": [
+      {
+        "fields": [
+          {
+            "name": "connectivity_node_mrid",
+            "nullable": false,
+            "type": {
+              "key": {
+                "kind": "int32"
+              },
+              "kind": "dictionary",
+              "value": {
+                "kind": "utf8"
+              }
+            }
+          },
+          {
+            "name": "topological_node_mrid",
+            "nullable": true,
+            "type": {
+              "key": {
+                "kind": "int32"
+              },
+              "kind": "dictionary",
+              "value": {
+                "kind": "utf8"
+              }
+            }
+          },
+          {
+            "name": "bus_id",
+            "nullable": true,
+            "type": {
+              "kind": "int32"
+            }
+          }
+        ]
+      }
+    ],
+    "contingencies": [
+      {
+        "fields": [
+          {
+            "name": "contingency_id",
+            "nullable": false,
+            "type": {
+              "key": {
+                "kind": "int32"
+              },
+              "kind": "dictionary",
+              "value": {
+                "kind": "utf8"
+              }
+            }
+          },
+          {
+            "name": "elements",
+            "nullable": false,
+            "type": {
+              "item": {
+                "fields": [
+                  {
+                    "name": "element_type",
+                    "nullable": false,
+                    "type": {
+                      "key": {
+                        "kind": "int32"
+                      },
+                      "kind": "dictionary",
+                      "value": {
+                        "kind": "utf8"
+                      }
+                    }
+                  },
+                  {
+                    "name": "branch_id",
+                    "nullable": true,
+                    "type": {
+                      "kind": "int32"
+                    }
+                  },
+                  {
+                    "name": "bus_id",
+                    "nullable": true,
+                    "type": {
+                      "kind": "int32"
+                    }
+                  },
+                  {
+                    "name": "gen_id",
+                    "nullable": true,
+                    "type": {
+                      "key": {
+                        "kind": "int32"
+                      },
+                      "kind": "dictionary",
+                      "value": {
+                        "kind": "utf8"
+                      }
+                    }
+                  },
+                  {
+                    "name": "load_id",
+                    "nullable": true,
+                    "type": {
+                      "key": {
+                        "kind": "int32"
+                      },
+                      "kind": "dictionary",
+                      "value": {
+                        "kind": "utf8"
+                      }
+                    }
+                  },
+                  {
+                    "name": "amount_mw",
+                    "nullable": true,
+                    "type": {
+                      "kind": "float64"
+                    }
+                  },
+                  {
+                    "name": "status_change",
+                    "nullable": false,
+                    "type": {
+                      "kind": "bool"
+                    }
+                  },
+                  {
+                    "name": "equipment_kind",
+                    "nullable": true,
+                    "type": {
+                      "key": {
+                        "kind": "int32"
+                      },
+                      "kind": "dictionary",
+                      "value": {
+                        "kind": "utf8"
+                      }
+                    }
+                  },
+                  {
+                    "name": "equipment_id",
+                    "nullable": true,
+                    "type": {
+                      "key": {
+                        "kind": "int32"
+                      },
+                      "kind": "dictionary",
+                      "value": {
+                        "kind": "utf8"
+                      }
+                    }
+                  }
+                ],
+                "kind": "struct"
+              },
+              "item_name": "element",
+              "item_nullable": false,
+              "kind": "list"
+            }
+          },
+          {
+            "name": "risk_score",
+            "nullable": true,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "cleared_by_reserves",
+            "nullable": true,
+            "type": {
+              "kind": "bool"
+            }
+          },
+          {
+            "name": "voltage_collapse_flag",
+            "nullable": true,
+            "type": {
+              "kind": "bool"
+            }
+          },
+          {
+            "name": "recovery_possible",
+            "nullable": true,
+            "type": {
+              "kind": "bool"
+            }
+          },
+          {
+            "name": "recovery_time_min",
+            "nullable": true,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "greedy_reserve_summary",
+            "nullable": true,
+            "type": {
+              "kind": "utf8"
+            }
+          },
+          {
+            "name": "tpl_category",
+            "nullable": true,
+            "type": {
+              "key": {
+                "kind": "int32"
+              },
+              "kind": "dictionary",
+              "value": {
+                "kind": "utf8"
+              }
+            }
+          },
+          {
+            "name": "reserved",
+            "nullable": true,
+            "type": {
+              "kind": "bool"
+            }
+          }
+        ]
+      }
+    ],
+    "contingency_island_analysis": [
+      {
+        "fields": [
+          {
+            "name": "contingency_id",
+            "nullable": false,
+            "type": {
+              "key": {
+                "kind": "int32"
+              },
+              "kind": "dictionary",
+              "value": {
+                "kind": "utf8"
+              }
+            }
+          },
+          {
+            "name": "classification",
+            "nullable": true,
+            "type": {
+              "key": {
+                "kind": "int32"
+              },
+              "kind": "dictionary",
+              "value": {
+                "kind": "utf8"
+              }
+            }
+          },
+          {
+            "name": "filter_reason",
+            "nullable": true,
+            "type": {
+              "key": {
+                "kind": "int32"
+              },
+              "kind": "dictionary",
+              "value": {
+                "kind": "utf8"
+              }
+            }
+          },
+          {
+            "name": "island_load_mw",
+            "nullable": true,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "island_gen_mw",
+            "nullable": true,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "bus_count",
+            "nullable": true,
+            "type": {
+              "kind": "int32"
+            }
+          },
+          {
+            "name": "max_kv",
+            "nullable": true,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "is_main_island",
+            "nullable": true,
+            "type": {
+              "kind": "bool"
+            }
+          },
+          {
+            "name": "excluded_from_events",
+            "nullable": true,
+            "type": {
+              "kind": "bool"
+            }
+          },
+          {
+            "name": "params_snapshot_json",
+            "nullable": true,
+            "type": {
+              "kind": "utf8"
+            }
+          }
+        ]
+      }
+    ],
+    "contingency_sequences": [
+      {
+        "fields": [
+          {
+            "name": "sequence_id",
+            "nullable": false,
+            "type": {
+              "key": {
+                "kind": "int32"
+              },
+              "kind": "dictionary",
+              "value": {
+                "kind": "utf8"
+              }
+            }
+          },
+          {
+            "name": "primary_contingency_id",
+            "nullable": false,
+            "type": {
+              "key": {
+                "kind": "int32"
+              },
+              "kind": "dictionary",
+              "value": {
+                "kind": "utf8"
+              }
+            }
+          },
+          {
+            "name": "secondary_contingency_id",
+            "nullable": false,
+            "type": {
+              "key": {
+                "kind": "int32"
+              },
+              "kind": "dictionary",
+              "value": {
+                "kind": "utf8"
+              }
+            }
+          },
+          {
+            "name": "intervening_window_min",
+            "nullable": true,
+            "type": {
+              "kind": "int32"
+            }
+          },
+          {
+            "name": "tpl_category",
+            "nullable": true,
+            "type": {
+              "key": {
+                "kind": "int32"
+              },
+              "kind": "dictionary",
+              "value": {
+                "kind": "utf8"
+              }
+            }
+          },
+          {
+            "name": "provenance",
+            "nullable": true,
+            "type": {
+              "key": {
+                "kind": "int32"
+              },
+              "kind": "dictionary",
+              "value": {
+                "kind": "utf8"
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "dc_converters": [
+      {
+        "fields": [
+          {
+            "name": "dc_line_id",
+            "nullable": false,
+            "type": {
+              "kind": "int32"
+            }
+          },
+          {
+            "name": "bus_id",
+            "nullable": false,
+            "type": {
+              "kind": "int32"
+            }
+          },
+          {
+            "name": "role",
+            "nullable": false,
+            "type": {
+              "kind": "utf8"
+            }
+          },
+          {
+            "name": "converter_kind",
+            "nullable": false,
+            "type": {
+              "kind": "utf8"
+            }
+          },
+          {
+            "name": "n_bridges",
+            "nullable": true,
+            "type": {
+              "kind": "int32"
+            }
+          },
+          {
+            "name": "ebas_kv",
+            "nullable": true,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "tr",
+            "nullable": true,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "tap",
+            "nullable": true,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "tap_min",
+            "nullable": true,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "tap_max",
+            "nullable": true,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "xc_ohm",
+            "nullable": true,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "alpha_deg",
+            "nullable": true,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "gamma_deg",
+            "nullable": true,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "is_meter_end",
+            "nullable": false,
+            "type": {
+              "kind": "bool"
+            }
+          },
+          {
+            "name": "ac_control",
+            "nullable": true,
+            "type": {
+              "kind": "utf8"
+            }
+          },
+          {
+            "name": "ac_setpoint",
+            "nullable": true,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "q_min_mvar",
+            "nullable": true,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "q_max_mvar",
+            "nullable": true,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "s_max_mva",
+            "nullable": true,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "i_max_ka",
+            "nullable": true,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "loss_const_mw",
+            "nullable": true,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "loss_i_mw_per_ka",
+            "nullable": true,
+            "type": {
+              "kind": "float64"
+            }
+          }
+        ]
+      }
+    ],
+    "dc_lines_2w": [
+      {
+        "fields": [
+          {
+            "name": "dc_line_id",
+            "nullable": false,
+            "type": {
+              "kind": "int32"
+            }
+          },
+          {
+            "name": "from_bus_id",
+            "nullable": false,
+            "type": {
+              "kind": "int32"
+            }
+          },
+          {
+            "name": "to_bus_id",
+            "nullable": false,
+            "type": {
+              "kind": "int32"
+            }
+          },
+          {
+            "name": "ckt",
+            "nullable": false,
+            "type": {
+              "kind": "utf8"
+            }
+          },
+          {
+            "name": "r_ohm",
+            "nullable": false,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "l_henry",
+            "nullable": true,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "control_mode",
+            "nullable": false,
+            "type": {
+              "kind": "utf8"
+            }
+          },
+          {
+            "name": "p_setpoint_mw",
+            "nullable": true,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "i_setpoint_ka",
+            "nullable": true,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "v_setpoint_kv",
+            "nullable": true,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "q_from_mvar",
+            "nullable": true,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "q_to_mvar",
+            "nullable": true,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "status",
+            "nullable": false,
+            "type": {
+              "kind": "bool"
+            }
+          },
+          {
+            "name": "name",
+            "nullable": true,
+            "type": {
+              "kind": "utf8"
+            }
+          },
+          {
+            "name": "converter_type",
+            "nullable": false,
+            "type": {
+              "kind": "utf8"
+            }
+          }
+        ]
+      },
+      {
+        "fields": [
+          {
+            "name": "dc_line_id",
+            "nullable": true,
+            "type": {
+              "kind": "int32"
+            }
+          },
+          {
+            "name": "from_bus_id",
+            "nullable": true,
+            "type": {
+              "kind": "int32"
+            }
+          },
+          {
+            "name": "to_bus_id",
+            "nullable": true,
+            "type": {
+              "kind": "int32"
+            }
+          },
+          {
+            "name": "status",
+            "nullable": true,
+            "type": {
+              "kind": "bool"
+            }
+          },
+          {
+            "name": "is_vsc",
+            "nullable": true,
+            "type": {
+              "kind": "bool"
+            }
+          },
+          {
+            "name": "control_mode",
+            "nullable": true,
+            "type": {
+              "kind": "utf8"
+            }
+          },
+          {
+            "name": "name",
+            "nullable": true,
+            "type": {
+              "kind": "utf8"
+            }
+          },
+          {
+            "name": "p_setpoint_mw",
+            "nullable": true,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "p_min_mw",
+            "nullable": true,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "p_max_mw",
+            "nullable": true,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "loss_factor",
+            "nullable": true,
+            "type": {
+              "kind": "float64"
+            }
+          }
+        ]
+      }
+    ],
+    "diagram_objects": [
+      {
+        "fields": [
+          {
+            "name": "element_id",
+            "nullable": false,
+            "type": {
+              "kind": "utf8"
+            }
+          },
+          {
+            "name": "element_type",
+            "nullable": false,
+            "type": {
+              "kind": "utf8"
+            }
+          },
+          {
+            "name": "diagram_id",
+            "nullable": false,
+            "type": {
+              "kind": "utf8"
+            }
+          },
+          {
+            "name": "rotation",
+            "nullable": true,
+            "type": {
+              "kind": "float32"
+            }
+          },
+          {
+            "name": "visible",
+            "nullable": false,
+            "type": {
+              "kind": "bool"
+            }
+          },
+          {
+            "name": "draw_order",
+            "nullable": true,
+            "type": {
+              "kind": "int32"
+            }
+          }
+        ]
+      }
+    ],
+    "diagram_points": [
+      {
+        "fields": [
+          {
+            "name": "element_id",
+            "nullable": false,
+            "type": {
+              "kind": "utf8"
+            }
+          },
+          {
+            "name": "diagram_id",
+            "nullable": false,
+            "type": {
+              "kind": "utf8"
+            }
+          },
+          {
+            "name": "seq",
+            "nullable": false,
+            "type": {
+              "kind": "int32"
+            }
+          },
+          {
+            "name": "x",
+            "nullable": false,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "y",
+            "nullable": false,
+            "type": {
+              "kind": "float64"
+            }
+          }
+        ]
+      }
+    ],
+    "dynamics": [
+      {
+        "fields": [
+          {
+            "name": "bus_id",
+            "nullable": false,
+            "type": {
+              "kind": "int32"
+            }
+          },
+          {
+            "name": "gen_id",
+            "nullable": false,
+            "type": {
+              "key": {
+                "kind": "int32"
+              },
+              "kind": "dictionary",
+              "value": {
+                "kind": "utf8"
+              }
+            }
+          },
+          {
+            "name": "model_type",
+            "nullable": false,
+            "type": {
+              "key": {
+                "kind": "int32"
+              },
+              "kind": "dictionary",
+              "value": {
+                "kind": "utf8"
+              }
+            }
+          },
+          {
+            "name": "params",
+            "nullable": false,
+            "type": {
+              "entries": {
+                "fields": [
+                  {
+                    "name": "key",
+                    "nullable": false,
+                    "type": {
+                      "kind": "utf8"
+                    }
+                  },
+                  {
+                    "name": "value",
+                    "nullable": false,
+                    "type": {
+                      "kind": "float64"
+                    }
+                  }
+                ],
+                "kind": "struct"
+              },
+              "entry_name": "entries",
+              "entry_nullable": false,
+              "keys_sorted": false,
+              "kind": "map"
+            }
+          },
+          {
+            "name": "perc1_params",
+            "nullable": true,
+            "type": {
+              "fields": [
+                {
+                  "name": "perc1_voltage_ride_through_pu",
+                  "nullable": true,
+                  "type": {
+                    "kind": "float64"
+                  }
+                },
+                {
+                  "name": "perc1_frequency_ride_through_hz",
+                  "nullable": true,
+                  "type": {
+                    "kind": "float64"
+                  }
+                },
+                {
+                  "name": "perc1_reactive_power_ceiling_pu",
+                  "nullable": true,
+                  "type": {
+                    "kind": "float64"
+                  }
+                },
+                {
+                  "name": "perc1_active_power_recovery_rate_pu_per_s",
+                  "nullable": true,
+                  "type": {
+                    "kind": "float64"
+                  }
+                },
+                {
+                  "name": "perc1_voltage_support_time_sec",
+                  "nullable": true,
+                  "type": {
+                    "kind": "float64"
+                  }
+                },
+                {
+                  "name": "perc1_frequency_support_time_sec",
+                  "nullable": true,
+                  "type": {
+                    "kind": "float64"
+                  }
+                }
+              ],
+              "kind": "struct"
+            }
+          },
+          {
+            "name": "classical_params",
+            "nullable": true,
+            "type": {
+              "fields": [
+                {
+                  "name": "H",
+                  "nullable": true,
+                  "type": {
+                    "kind": "float64"
+                  }
+                },
+                {
+                  "name": "D",
+                  "nullable": true,
+                  "type": {
+                    "kind": "float64"
+                  }
+                },
+                {
+                  "name": "xd_prime",
+                  "nullable": true,
+                  "type": {
+                    "kind": "float64"
+                  }
+                },
+                {
+                  "name": "mbase_mva",
+                  "nullable": true,
+                  "type": {
+                    "kind": "float64"
+                  }
+                }
+              ],
+              "kind": "struct"
+            }
+          }
+        ]
+      }
+    ],
+    "dynamics_models": [
+      {
+        "fields": [
+          {
+            "name": "bus_id",
+            "nullable": false,
+            "type": {
+              "kind": "int32"
+            }
+          },
+          {
+            "name": "gen_id",
+            "nullable": false,
+            "type": {
+              "key": {
+                "kind": "int32"
+              },
+              "kind": "dictionary",
+              "value": {
+                "kind": "utf8"
+              }
+            }
+          },
+          {
+            "name": "model_type",
+            "nullable": false,
+            "type": {
+              "key": {
+                "kind": "int32"
+              },
+              "kind": "dictionary",
+              "value": {
+                "kind": "utf8"
+              }
+            }
+          },
+          {
+            "name": "params",
+            "nullable": false,
+            "type": {
+              "entries": {
+                "fields": [
+                  {
+                    "name": "key",
+                    "nullable": false,
+                    "type": {
+                      "kind": "utf8"
+                    }
+                  },
+                  {
+                    "name": "value",
+                    "nullable": false,
+                    "type": {
+                      "kind": "float64"
+                    }
+                  }
+                ],
+                "kind": "struct"
+              },
+              "entry_name": "entries",
+              "entry_nullable": false,
+              "keys_sorted": false,
+              "kind": "map"
+            }
+          },
+          {
+            "name": "perc1_params",
+            "nullable": true,
+            "type": {
+              "fields": [
+                {
+                  "name": "perc1_voltage_ride_through_pu",
+                  "nullable": true,
+                  "type": {
+                    "kind": "float64"
+                  }
+                },
+                {
+                  "name": "perc1_frequency_ride_through_hz",
+                  "nullable": true,
+                  "type": {
+                    "kind": "float64"
+                  }
+                },
+                {
+                  "name": "perc1_reactive_power_ceiling_pu",
+                  "nullable": true,
+                  "type": {
+                    "kind": "float64"
+                  }
+                },
+                {
+                  "name": "perc1_active_power_recovery_rate_pu_per_s",
+                  "nullable": true,
+                  "type": {
+                    "kind": "float64"
+                  }
+                },
+                {
+                  "name": "perc1_voltage_support_time_sec",
+                  "nullable": true,
+                  "type": {
+                    "kind": "float64"
+                  }
+                },
+                {
+                  "name": "perc1_frequency_support_time_sec",
+                  "nullable": true,
+                  "type": {
+                    "kind": "float64"
+                  }
+                }
+              ],
+              "kind": "struct"
+            }
+          },
+          {
+            "name": "classical_params",
+            "nullable": true,
+            "type": {
+              "fields": [
+                {
+                  "name": "H",
+                  "nullable": true,
+                  "type": {
+                    "kind": "float64"
+                  }
+                },
+                {
+                  "name": "D",
+                  "nullable": true,
+                  "type": {
+                    "kind": "float64"
+                  }
+                },
+                {
+                  "name": "xd_prime",
+                  "nullable": true,
+                  "type": {
+                    "kind": "float64"
+                  }
+                },
+                {
+                  "name": "mbase_mva",
+                  "nullable": true,
+                  "type": {
+                    "kind": "float64"
+                  }
+                }
+              ],
+              "kind": "struct"
+            }
+          }
+        ]
+      }
+    ],
+    "facts_devices": [
+      {
+        "fields": [
+          {
+            "name": "device_id",
+            "nullable": false,
+            "type": {
+              "key": {
+                "kind": "int32"
+              },
+              "kind": "dictionary",
+              "value": {
+                "kind": "utf8"
+              }
+            }
+          },
+          {
+            "name": "branch_id",
+            "nullable": true,
+            "type": {
+              "kind": "int32"
+            }
+          },
+          {
+            "name": "bus_id",
+            "nullable": true,
+            "type": {
+              "kind": "int32"
+            }
+          },
+          {
+            "name": "device_type",
+            "nullable": false,
+            "type": {
+              "key": {
+                "kind": "int32"
+              },
+              "kind": "dictionary",
+              "value": {
+                "kind": "utf8"
+              }
+            }
+          },
+          {
+            "name": "status",
+            "nullable": false,
+            "type": {
+              "kind": "bool"
+            }
+          },
+          {
+            "name": "control_mode",
+            "nullable": true,
+            "type": {
+              "key": {
+                "kind": "int32"
+              },
+              "kind": "dictionary",
+              "value": {
+                "kind": "utf8"
+              }
+            }
+          },
+          {
+            "name": "target_flow_mw",
+            "nullable": true,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "x_min_pu",
+            "nullable": true,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "x_max_pu",
+            "nullable": true,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "voltage_injection_mag_pu",
+            "nullable": true,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "voltage_injection_angle_deg",
+            "nullable": true,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "response_time_ms",
+            "nullable": true,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "rating_mva",
+            "nullable": true,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "dynamics_model_ref",
+            "nullable": true,
+            "type": {
+              "key": {
+                "kind": "int32"
+              },
+              "kind": "dictionary",
+              "value": {
+                "kind": "utf8"
+              }
+            }
+          },
+          {
+            "name": "params",
+            "nullable": true,
+            "type": {
+              "entries": {
+                "fields": [
+                  {
+                    "name": "key",
+                    "nullable": false,
+                    "type": {
+                      "kind": "utf8"
+                    }
+                  },
+                  {
+                    "name": "value",
+                    "nullable": false,
+                    "type": {
+                      "kind": "float64"
+                    }
+                  }
+                ],
+                "kind": "struct"
+              },
+              "entry_name": "entries",
+              "entry_nullable": false,
+              "keys_sorted": false,
+              "kind": "map"
+            }
+          },
+          {
+            "name": "name",
+            "nullable": true,
+            "type": {
+              "key": {
+                "kind": "int32"
+              },
+              "kind": "dictionary",
+              "value": {
+                "kind": "utf8"
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "facts_solved": [
+      {
+        "fields": [
+          {
+            "name": "device_id",
+            "nullable": false,
+            "type": {
+              "key": {
+                "kind": "int32"
+              },
+              "kind": "dictionary",
+              "value": {
+                "kind": "utf8"
+              }
+            }
+          },
+          {
+            "name": "effective_x_pu",
+            "nullable": true,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "injected_voltage_mag_pu",
+            "nullable": true,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "injected_voltage_angle_deg",
+            "nullable": true,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "p_effect_mw",
+            "nullable": true,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "q_effect_mvar",
+            "nullable": true,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "status",
+            "nullable": true,
+            "type": {
+              "kind": "bool"
+            }
+          }
+        ]
+      }
+    ],
+    "feasibility_certificate_buses": [
+      {
+        "fields": [
+          {
+            "name": "bus_id",
+            "nullable": false,
+            "type": {
+              "kind": "int32"
+            }
+          },
+          {
+            "name": "is_pv",
+            "nullable": true,
+            "type": {
+              "kind": "bool"
+            }
+          },
+          {
+            "name": "switched_to_pq",
+            "nullable": true,
+            "type": {
+              "kind": "bool"
+            }
+          },
+          {
+            "name": "q_gen_pu",
+            "nullable": true,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "complementarity_ok",
+            "nullable": true,
+            "type": {
+              "kind": "bool"
+            }
+          },
+          {
+            "name": "voltage_box_ok",
+            "nullable": true,
+            "type": {
+              "kind": "bool"
+            }
+          },
+          {
+            "name": "violation_kind",
+            "nullable": true,
+            "type": {
+              "key": {
+                "kind": "int32"
+              },
+              "kind": "dictionary",
+              "value": {
+                "kind": "utf8"
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "fixed_shunts": [
+      {
+        "fields": [
+          {
+            "name": "bus_id",
+            "nullable": false,
+            "type": {
+              "kind": "int32"
+            }
+          },
+          {
+            "name": "id",
+            "nullable": false,
+            "type": {
+              "key": {
+                "kind": "int32"
+              },
+              "kind": "dictionary",
+              "value": {
+                "kind": "utf8"
+              }
+            }
+          },
+          {
+            "name": "status",
+            "nullable": false,
+            "type": {
+              "kind": "bool"
+            }
+          },
+          {
+            "name": "g_pu",
+            "nullable": false,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "b_pu",
+            "nullable": false,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "mrid",
+            "nullable": true,
+            "type": {
+              "kind": "utf8"
+            }
+          }
+        ]
+      }
+    ],
+    "generators": [
+      {
+        "fields": [
+          {
+            "name": "generator_id",
+            "nullable": false,
+            "type": {
+              "kind": "int32"
+            }
+          },
+          {
+            "name": "bus_id",
+            "nullable": false,
+            "type": {
+              "kind": "int32"
+            }
+          },
+          {
+            "name": "name",
+            "nullable": true,
+            "type": {
+              "kind": "utf8"
+            }
+          },
+          {
+            "name": "unit_type",
+            "nullable": false,
+            "type": {
+              "kind": "utf8"
+            }
+          },
+          {
+            "name": "hierarchy_level",
+            "nullable": false,
+            "type": {
+              "kind": "utf8"
+            }
+          },
+          {
+            "name": "parent_generator_id",
+            "nullable": true,
+            "type": {
+              "kind": "int32"
+            }
+          },
+          {
+            "name": "aggregation_count",
+            "nullable": true,
+            "type": {
+              "kind": "int32"
+            }
+          },
+          {
+            "name": "status",
+            "nullable": false,
+            "type": {
+              "kind": "bool"
+            }
+          },
+          {
+            "name": "is_ibr",
+            "nullable": false,
+            "type": {
+              "kind": "bool"
+            }
+          },
+          {
+            "name": "ibr_subtype",
+            "nullable": true,
+            "type": {
+              "kind": "utf8"
+            }
+          },
+          {
+            "name": "p_sched_mw",
+            "nullable": false,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "q_sched_mvar",
+            "nullable": false,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "p_min_mw",
+            "nullable": false,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "p_max_mw",
+            "nullable": false,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "q_min_mvar",
+            "nullable": false,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "q_max_mvar",
+            "nullable": false,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "mbase_mva",
+            "nullable": false,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "uol_mw",
+            "nullable": true,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "lol_mw",
+            "nullable": true,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "ramp_rate_up_mw_min",
+            "nullable": true,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "ramp_rate_down_mw_min",
+            "nullable": true,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "owner_id",
+            "nullable": true,
+            "type": {
+              "kind": "int32"
+            }
+          },
+          {
+            "name": "market_resource_id",
+            "nullable": true,
+            "type": {
+              "kind": "utf8"
+            }
+          },
+          {
+            "name": "params",
+            "nullable": true,
+            "type": {
+              "entries": {
+                "fields": [
+                  {
+                    "name": "key",
+                    "nullable": false,
+                    "type": {
+                      "kind": "utf8"
+                    }
+                  },
+                  {
+                    "name": "value",
+                    "nullable": false,
+                    "type": {
+                      "kind": "float64"
+                    }
+                  }
+                ],
+                "kind": "struct"
+              },
+              "entry_name": "entries",
+              "entry_nullable": false,
+              "keys_sorted": false,
+              "kind": "map"
+            }
+          },
+          {
+            "name": "controlled_bus_id",
+            "nullable": true,
+            "type": {
+              "kind": "int32"
+            }
+          },
+          {
+            "name": "mrid",
+            "nullable": true,
+            "type": {
+              "kind": "utf8"
+            }
+          }
+        ]
+      }
+    ],
+    "generators_solved": [
+      {
+        "fields": [
+          {
+            "name": "bus_id",
+            "nullable": false,
+            "type": {
+              "kind": "int32"
+            }
+          },
+          {
+            "name": "id",
+            "nullable": false,
+            "type": {
+              "key": {
+                "kind": "int32"
+              },
+              "kind": "dictionary",
+              "value": {
+                "kind": "utf8"
+              }
+            }
+          },
+          {
+            "name": "p_actual_pu",
+            "nullable": true,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "q_actual_pu",
+            "nullable": true,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "p_mw",
+            "nullable": true,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "q_mvar",
+            "nullable": true,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "status",
+            "nullable": true,
+            "type": {
+              "kind": "bool"
+            }
+          },
+          {
+            "name": "pv_to_pq",
+            "nullable": true,
+            "type": {
+              "kind": "bool"
+            }
+          },
+          {
+            "name": "provenance",
+            "nullable": true,
+            "type": {
+              "key": {
+                "kind": "int32"
+              },
+              "kind": "dictionary",
+              "value": {
+                "kind": "utf8"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "fields": [
+          {
+            "name": "bus_id",
+            "nullable": false,
+            "type": {
+              "kind": "int32"
+            }
+          },
+          {
+            "name": "id",
+            "nullable": false,
+            "type": {
+              "key": {
+                "kind": "int32"
+              },
+              "kind": "dictionary",
+              "value": {
+                "kind": "utf8"
+              }
+            }
+          },
+          {
+            "name": "p_mw",
+            "nullable": true,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "q_mvar",
+            "nullable": true,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "status",
+            "nullable": true,
+            "type": {
+              "kind": "bool"
+            }
+          }
+        ]
+      }
+    ],
+    "interfaces": [
+      {
+        "fields": [
+          {
+            "name": "interface_id",
+            "nullable": false,
+            "type": {
+              "kind": "int32"
+            }
+          },
+          {
+            "name": "name",
+            "nullable": false,
+            "type": {
+              "key": {
+                "kind": "int32"
+              },
+              "kind": "dictionary",
+              "value": {
+                "kind": "utf8"
+              }
+            }
+          },
+          {
+            "name": "monitored_branches",
+            "nullable": false,
+            "type": {
+              "item": {
+                "kind": "int32"
+              },
+              "item_name": "item",
+              "item_nullable": false,
+              "kind": "list"
+            }
+          },
+          {
+            "name": "transfer_limit_mw",
+            "nullable": false,
+            "type": {
+              "kind": "float64"
+            }
+          }
+        ]
+      }
+    ],
+    "loads": [
+      {
+        "fields": [
+          {
+            "name": "bus_id",
+            "nullable": false,
+            "type": {
+              "kind": "int32"
+            }
+          },
+          {
+            "name": "id",
+            "nullable": false,
+            "type": {
+              "key": {
+                "kind": "int32"
+              },
+              "kind": "dictionary",
+              "value": {
+                "kind": "utf8"
+              }
+            }
+          },
+          {
+            "name": "status",
+            "nullable": false,
+            "type": {
+              "kind": "bool"
+            }
+          },
+          {
+            "name": "p_pu",
+            "nullable": false,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "q_pu",
+            "nullable": false,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "p_i_pu",
+            "nullable": true,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "q_i_pu",
+            "nullable": true,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "p_y_pu",
+            "nullable": true,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "q_y_pu",
+            "nullable": true,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "name",
+            "nullable": true,
+            "type": {
+              "key": {
+                "kind": "uint32"
+              },
+              "kind": "dictionary",
+              "value": {
+                "kind": "utf8"
+              }
+            }
+          },
+          {
+            "name": "mrid",
+            "nullable": true,
+            "type": {
+              "kind": "utf8"
+            }
+          }
+        ]
+      }
+    ],
+    "metadata": [
+      {
+        "fields": [
+          {
+            "name": "base_mva",
+            "nullable": false,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "frequency_hz",
+            "nullable": false,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "source_format",
+            "nullable": true,
+            "type": {
+              "key": {
+                "kind": "int32"
+              },
+              "kind": "dictionary",
+              "value": {
+                "kind": "utf8"
+              }
+            }
+          },
+          {
+            "name": "source_format_version",
+            "nullable": true,
+            "type": {
+              "kind": "utf8"
+            }
+          },
+          {
+            "name": "source_identity_scheme",
+            "nullable": true,
+            "type": {
+              "key": {
+                "kind": "int32"
+              },
+              "kind": "dictionary",
+              "value": {
+                "kind": "utf8"
+              }
+            }
+          },
+          {
+            "name": "study_name",
+            "nullable": false,
+            "type": {
+              "key": {
+                "kind": "int32"
+              },
+              "kind": "dictionary",
+              "value": {
+                "kind": "utf8"
+              }
+            }
+          },
+          {
+            "name": "timestamp_utc",
+            "nullable": false,
+            "type": {
+              "kind": "timestamp",
+              "tz": "UTC",
+              "unit": "us"
+            }
+          },
+          {
+            "name": "raptrix_version",
+            "nullable": false,
+            "type": {
+              "kind": "utf8"
+            }
+          },
+          {
+            "name": "is_planning_case",
+            "nullable": false,
+            "type": {
+              "kind": "bool"
+            }
+          },
+          {
+            "name": "source_case_id",
+            "nullable": false,
+            "type": {
+              "key": {
+                "kind": "int32"
+              },
+              "kind": "dictionary",
+              "value": {
+                "kind": "utf8"
+              }
+            }
+          },
+          {
+            "name": "snapshot_timestamp_utc",
+            "nullable": false,
+            "type": {
+              "kind": "timestamp",
+              "tz": "UTC",
+              "unit": "us"
+            }
+          },
+          {
+            "name": "case_fingerprint",
+            "nullable": false,
+            "type": {
+              "kind": "utf8"
+            }
+          },
+          {
+            "name": "validation_mode",
+            "nullable": false,
+            "type": {
+              "key": {
+                "kind": "int32"
+              },
+              "kind": "dictionary",
+              "value": {
+                "kind": "utf8"
+              }
+            }
+          },
+          {
+            "name": "custom_metadata",
+            "nullable": true,
+            "type": {
+              "entries": {
+                "fields": [
+                  {
+                    "name": "key",
+                    "nullable": false,
+                    "type": {
+                      "kind": "utf8"
+                    }
+                  },
+                  {
+                    "name": "value",
+                    "nullable": false,
+                    "type": {
+                      "kind": "utf8"
+                    }
+                  }
+                ],
+                "kind": "struct"
+              },
+              "entry_name": "entries",
+              "entry_nullable": false,
+              "keys_sorted": false,
+              "kind": "map"
+            }
+          },
+          {
+            "name": "case_mode",
+            "nullable": false,
+            "type": {
+              "key": {
+                "kind": "int32"
+              },
+              "kind": "dictionary",
+              "value": {
+                "kind": "utf8"
+              }
+            }
+          },
+          {
+            "name": "solved_state_presence",
+            "nullable": true,
+            "type": {
+              "key": {
+                "kind": "int32"
+              },
+              "kind": "dictionary",
+              "value": {
+                "kind": "utf8"
+              }
+            }
+          },
+          {
+            "name": "solver_version",
+            "nullable": true,
+            "type": {
+              "kind": "utf8"
+            }
+          },
+          {
+            "name": "solver_iterations",
+            "nullable": true,
+            "type": {
+              "kind": "int32"
+            }
+          },
+          {
+            "name": "solver_accuracy",
+            "nullable": true,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "solver_mode",
+            "nullable": true,
+            "type": {
+              "key": {
+                "kind": "int32"
+              },
+              "kind": "dictionary",
+              "value": {
+                "kind": "utf8"
+              }
+            }
+          },
+          {
+            "name": "slack_bus_id_solved",
+            "nullable": true,
+            "type": {
+              "kind": "int32"
+            }
+          },
+          {
+            "name": "angle_reference_deg",
+            "nullable": true,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "solved_shunt_state_presence",
+            "nullable": true,
+            "type": {
+              "key": {
+                "kind": "int32"
+              },
+              "kind": "dictionary",
+              "value": {
+                "kind": "utf8"
+              }
+            }
+          },
+          {
+            "name": "modern_grid_profile",
+            "nullable": false,
+            "type": {
+              "kind": "bool"
+            }
+          },
+          {
+            "name": "ibr_penetration_pct",
+            "nullable": true,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "has_ibr",
+            "nullable": false,
+            "type": {
+              "kind": "bool"
+            }
+          },
+          {
+            "name": "has_smart_valve",
+            "nullable": false,
+            "type": {
+              "kind": "bool"
+            }
+          },
+          {
+            "name": "has_multi_terminal_dc",
+            "nullable": false,
+            "type": {
+              "kind": "bool"
+            }
+          },
+          {
+            "name": "study_purpose",
+            "nullable": true,
+            "type": {
+              "kind": "utf8"
+            }
+          },
+          {
+            "name": "scenario_tags",
+            "nullable": true,
+            "type": {
+              "item": {
+                "kind": "utf8"
+              },
+              "item_name": "item",
+              "item_nullable": false,
+              "kind": "list"
+            }
+          },
+          {
+            "name": "hour_ahead_uncertainty_band",
+            "nullable": true,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "commitment_source",
+            "nullable": true,
+            "type": {
+              "kind": "utf8"
+            }
+          },
+          {
+            "name": "solver_q_limit_infeasible_count",
+            "nullable": true,
+            "type": {
+              "kind": "int32"
+            }
+          },
+          {
+            "name": "pv_to_pq_switch_count",
+            "nullable": true,
+            "type": {
+              "kind": "int32"
+            }
+          },
+          {
+            "name": "real_time_discovery",
+            "nullable": true,
+            "type": {
+              "kind": "bool"
+            }
+          },
+          {
+            "name": "default_shunt_control_mode",
+            "nullable": true,
+            "type": {
+              "key": {
+                "kind": "int32"
+              },
+              "kind": "dictionary",
+              "value": {
+                "kind": "utf8"
+              }
+            }
+          },
+          {
+            "name": "computational_load_mode",
+            "nullable": true,
+            "type": {
+              "kind": "bool"
+            }
+          },
+          {
+            "name": "baseline_source_case_id",
+            "nullable": true,
+            "type": {
+              "kind": "utf8"
+            }
+          },
+          {
+            "name": "original_model_version",
+            "nullable": true,
+            "type": {
+              "kind": "utf8"
+            }
+          },
+          {
+            "name": "target_baseline_version",
+            "nullable": true,
+            "type": {
+              "kind": "utf8"
+            }
+          },
+          {
+            "name": "is_sal_enhanced",
+            "nullable": true,
+            "type": {
+              "kind": "bool"
+            }
+          },
+          {
+            "name": "sal_enhancement_timestamp",
+            "nullable": true,
+            "type": {
+              "kind": "timestamp",
+              "tz": "UTC",
+              "unit": "us"
+            }
+          },
+          {
+            "name": "cim_model_version_used",
+            "nullable": true,
+            "type": {
+              "kind": "utf8"
+            }
+          },
+          {
+            "name": "planning_ready",
+            "nullable": true,
+            "type": {
+              "kind": "bool"
+            }
+          },
+          {
+            "name": "upgrade_summary",
+            "nullable": true,
+            "type": {
+              "kind": "utf8"
+            }
+          },
+          {
+            "name": "convergence_time_ms",
+            "nullable": true,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "convergence_iterations",
+            "nullable": true,
+            "type": {
+              "kind": "int32"
+            }
+          }
+        ]
+      }
+    ],
+    "multi_section_lines": [
+      {
+        "fields": [
+          {
+            "name": "line_id",
+            "nullable": false,
+            "type": {
+              "kind": "int32"
+            }
+          },
+          {
+            "name": "from_bus_id",
+            "nullable": false,
+            "type": {
+              "kind": "int32"
+            }
+          },
+          {
+            "name": "to_bus_id",
+            "nullable": false,
+            "type": {
+              "kind": "int32"
+            }
+          },
+          {
+            "name": "ckt",
+            "nullable": false,
+            "type": {
+              "kind": "utf8"
+            }
+          },
+          {
+            "name": "section_branch_ids",
+            "nullable": false,
+            "type": {
+              "item": {
+                "kind": "int32"
+              },
+              "item_name": "item",
+              "item_nullable": false,
+              "kind": "list"
+            }
+          },
+          {
+            "name": "total_r_pu",
+            "nullable": false,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "total_x_pu",
+            "nullable": false,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "total_b_pu",
+            "nullable": false,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "rate_a_mva",
+            "nullable": false,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "rate_b_mva",
+            "nullable": true,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "status",
+            "nullable": false,
+            "type": {
+              "kind": "bool"
+            }
+          },
+          {
+            "name": "name",
+            "nullable": true,
+            "type": {
+              "kind": "utf8"
+            }
+          },
+          {
+            "name": "is_secured",
+            "nullable": true,
+            "type": {
+              "kind": "bool"
+            }
+          },
+          {
+            "name": "is_bes",
+            "nullable": true,
+            "type": {
+              "kind": "bool"
+            }
+          },
+          {
+            "name": "is_bps",
+            "nullable": true,
+            "type": {
+              "kind": "bool"
+            }
+          },
+          {
+            "name": "is_bptf",
+            "nullable": true,
+            "type": {
+              "kind": "bool"
+            }
+          }
+        ]
+      },
+      {
+        "fields": [
+          {
+            "name": "line_id",
+            "nullable": true,
+            "type": {
+              "kind": "int32"
+            }
+          },
+          {
+            "name": "parent_line_id",
+            "nullable": true,
+            "type": {
+              "kind": "int32"
+            }
+          },
+          {
+            "name": "section_index",
+            "nullable": true,
+            "type": {
+              "kind": "int32"
+            }
+          },
+          {
+            "name": "section_branch_id",
+            "nullable": true,
+            "type": {
+              "kind": "int32"
+            }
+          },
+          {
+            "name": "from_bus_id",
+            "nullable": true,
+            "type": {
+              "kind": "int32"
+            }
+          },
+          {
+            "name": "to_bus_id",
+            "nullable": true,
+            "type": {
+              "kind": "int32"
+            }
+          },
+          {
+            "name": "status",
+            "nullable": true,
+            "type": {
+              "kind": "bool"
+            }
+          },
+          {
+            "name": "name",
+            "nullable": true,
+            "type": {
+              "kind": "utf8"
+            }
+          }
+        ]
+      }
+    ],
+    "node_breaker_detail": [
+      {
+        "fields": [
+          {
+            "name": "switch_id",
+            "nullable": false,
+            "type": {
+              "key": {
+                "kind": "int32"
+              },
+              "kind": "dictionary",
+              "value": {
+                "kind": "utf8"
+              }
+            }
+          },
+          {
+            "name": "switch_type",
+            "nullable": false,
+            "type": {
+              "key": {
+                "kind": "int32"
+              },
+              "kind": "dictionary",
+              "value": {
+                "kind": "utf8"
+              }
+            }
+          },
+          {
+            "name": "from_bus_id",
+            "nullable": true,
+            "type": {
+              "kind": "int32"
+            }
+          },
+          {
+            "name": "to_bus_id",
+            "nullable": true,
+            "type": {
+              "kind": "int32"
+            }
+          },
+          {
+            "name": "connectivity_node_a",
+            "nullable": true,
+            "type": {
+              "key": {
+                "kind": "int32"
+              },
+              "kind": "dictionary",
+              "value": {
+                "kind": "utf8"
+              }
+            }
+          },
+          {
+            "name": "connectivity_node_b",
+            "nullable": true,
+            "type": {
+              "key": {
+                "kind": "int32"
+              },
+              "kind": "dictionary",
+              "value": {
+                "kind": "utf8"
+              }
+            }
+          },
+          {
+            "name": "is_open",
+            "nullable": true,
+            "type": {
+              "kind": "bool"
+            }
+          },
+          {
+            "name": "normal_open",
+            "nullable": true,
+            "type": {
+              "kind": "bool"
+            }
+          },
+          {
+            "name": "status",
+            "nullable": true,
+            "type": {
+              "kind": "bool"
+            }
+          }
+        ]
+      }
+    ],
+    "owners": [
+      {
+        "fields": [
+          {
+            "name": "owner_id",
+            "nullable": false,
+            "type": {
+              "kind": "int32"
+            }
+          },
+          {
+            "name": "name",
+            "nullable": false,
+            "type": {
+              "kind": "utf8"
+            }
+          },
+          {
+            "name": "short_name",
+            "nullable": true,
+            "type": {
+              "kind": "utf8"
+            }
+          },
+          {
+            "name": "type",
+            "nullable": true,
+            "type": {
+              "kind": "utf8"
+            }
+          },
+          {
+            "name": "params",
+            "nullable": true,
+            "type": {
+              "entries": {
+                "fields": [
+                  {
+                    "name": "key",
+                    "nullable": false,
+                    "type": {
+                      "kind": "utf8"
+                    }
+                  },
+                  {
+                    "name": "value",
+                    "nullable": false,
+                    "type": {
+                      "kind": "float64"
+                    }
+                  }
+                ],
+                "kind": "struct"
+              },
+              "entry_name": "entries",
+              "entry_nullable": false,
+              "keys_sorted": false,
+              "kind": "map"
+            }
+          }
+        ]
+      }
+    ],
+    "protection_contingencies": [
+      {
+        "fields": [
+          {
+            "name": "contingency_id",
+            "nullable": false,
+            "type": {
+              "key": {
+                "kind": "int32"
+              },
+              "kind": "dictionary",
+              "value": {
+                "kind": "utf8"
+              }
+            }
+          },
+          {
+            "name": "protection_group_id",
+            "nullable": false,
+            "type": {
+              "key": {
+                "kind": "int32"
+              },
+              "kind": "dictionary",
+              "value": {
+                "kind": "utf8"
+              }
+            }
+          },
+          {
+            "name": "name",
+            "nullable": true,
+            "type": {
+              "kind": "utf8"
+            }
+          },
+          {
+            "name": "scheme_type",
+            "nullable": false,
+            "type": {
+              "key": {
+                "kind": "int32"
+              },
+              "kind": "dictionary",
+              "value": {
+                "kind": "utf8"
+              }
+            }
+          },
+          {
+            "name": "initiating_equipment_kind",
+            "nullable": true,
+            "type": {
+              "key": {
+                "kind": "int32"
+              },
+              "kind": "dictionary",
+              "value": {
+                "kind": "utf8"
+              }
+            }
+          },
+          {
+            "name": "initiating_equipment_id",
+            "nullable": true,
+            "type": {
+              "key": {
+                "kind": "int32"
+              },
+              "kind": "dictionary",
+              "value": {
+                "kind": "utf8"
+              }
+            }
+          },
+          {
+            "name": "tripped_elements",
+            "nullable": false,
+            "type": {
+              "item": {
+                "fields": [
+                  {
+                    "name": "element_type",
+                    "nullable": false,
+                    "type": {
+                      "key": {
+                        "kind": "int32"
+                      },
+                      "kind": "dictionary",
+                      "value": {
+                        "kind": "utf8"
+                      }
+                    }
+                  },
+                  {
+                    "name": "branch_id",
+                    "nullable": true,
+                    "type": {
+                      "kind": "int32"
+                    }
+                  },
+                  {
+                    "name": "bus_id",
+                    "nullable": true,
+                    "type": {
+                      "kind": "int32"
+                    }
+                  },
+                  {
+                    "name": "gen_id",
+                    "nullable": true,
+                    "type": {
+                      "key": {
+                        "kind": "int32"
+                      },
+                      "kind": "dictionary",
+                      "value": {
+                        "kind": "utf8"
+                      }
+                    }
+                  },
+                  {
+                    "name": "load_id",
+                    "nullable": true,
+                    "type": {
+                      "key": {
+                        "kind": "int32"
+                      },
+                      "kind": "dictionary",
+                      "value": {
+                        "kind": "utf8"
+                      }
+                    }
+                  },
+                  {
+                    "name": "amount_mw",
+                    "nullable": true,
+                    "type": {
+                      "kind": "float64"
+                    }
+                  },
+                  {
+                    "name": "status_change",
+                    "nullable": false,
+                    "type": {
+                      "kind": "bool"
+                    }
+                  },
+                  {
+                    "name": "equipment_kind",
+                    "nullable": true,
+                    "type": {
+                      "key": {
+                        "kind": "int32"
+                      },
+                      "kind": "dictionary",
+                      "value": {
+                        "kind": "utf8"
+                      }
+                    }
+                  },
+                  {
+                    "name": "equipment_id",
+                    "nullable": true,
+                    "type": {
+                      "key": {
+                        "kind": "int32"
+                      },
+                      "kind": "dictionary",
+                      "value": {
+                        "kind": "utf8"
+                      }
+                    }
+                  }
+                ],
+                "kind": "struct"
+              },
+              "item_name": "element",
+              "item_nullable": false,
+              "kind": "list"
+            }
+          },
+          {
+            "name": "sequence",
+            "nullable": true,
+            "type": {
+              "item": {
+                "fields": [
+                  {
+                    "name": "step",
+                    "nullable": false,
+                    "type": {
+                      "kind": "int32"
+                    }
+                  },
+                  {
+                    "name": "delay_ms",
+                    "nullable": true,
+                    "type": {
+                      "kind": "float64"
+                    }
+                  },
+                  {
+                    "name": "equipment_kind",
+                    "nullable": true,
+                    "type": {
+                      "key": {
+                        "kind": "int32"
+                      },
+                      "kind": "dictionary",
+                      "value": {
+                        "kind": "utf8"
+                      }
+                    }
+                  },
+                  {
+                    "name": "equipment_id",
+                    "nullable": true,
+                    "type": {
+                      "key": {
+                        "kind": "int32"
+                      },
+                      "kind": "dictionary",
+                      "value": {
+                        "kind": "utf8"
+                      }
+                    }
+                  }
+                ],
+                "kind": "struct"
+              },
+              "item_name": "step_item",
+              "item_nullable": false,
+              "kind": "list"
+            }
+          },
+          {
+            "name": "topology_change_id",
+            "nullable": true,
+            "type": {
+              "kind": "int32"
+            }
+          },
+          {
+            "name": "data_confidence",
+            "nullable": false,
+            "type": {
+              "key": {
+                "kind": "int32"
+              },
+              "kind": "dictionary",
+              "value": {
+                "kind": "utf8"
+              }
+            }
+          },
+          {
+            "name": "breaker_ids",
+            "nullable": true,
+            "type": {
+              "item": {
+                "kind": "utf8"
+              },
+              "item_name": "item",
+              "item_nullable": false,
+              "kind": "list"
+            }
+          },
+          {
+            "name": "params",
+            "nullable": true,
+            "type": {
+              "entries": {
+                "fields": [
+                  {
+                    "name": "key",
+                    "nullable": false,
+                    "type": {
+                      "kind": "utf8"
+                    }
+                  },
+                  {
+                    "name": "value",
+                    "nullable": false,
+                    "type": {
+                      "kind": "float64"
+                    }
+                  }
+                ],
+                "kind": "struct"
+              },
+              "entry_name": "entries",
+              "entry_nullable": false,
+              "keys_sorted": false,
+              "kind": "map"
+            }
+          }
+        ]
+      }
+    ],
+    "q_limits_solved": [
+      {
+        "fields": [
+          {
+            "name": "bus_id",
+            "nullable": false,
+            "type": {
+              "kind": "int32"
+            }
+          },
+          {
+            "name": "q_net_target_pu",
+            "nullable": false,
+            "type": {
+              "kind": "float64"
+            }
+          }
+        ]
+      }
+    ],
+    "remedial_action_schemes": [
+      {
+        "fields": [
+          {
+            "name": "ras_id",
+            "nullable": false,
+            "type": {
+              "key": {
+                "kind": "int32"
+              },
+              "kind": "dictionary",
+              "value": {
+                "kind": "utf8"
+              }
+            }
+          },
+          {
+            "name": "name",
+            "nullable": true,
+            "type": {
+              "kind": "utf8"
+            }
+          },
+          {
+            "name": "authority",
+            "nullable": true,
+            "type": {
+              "kind": "utf8"
+            }
+          },
+          {
+            "name": "model_version",
+            "nullable": true,
+            "type": {
+              "kind": "utf8"
+            }
+          },
+          {
+            "name": "enabled",
+            "nullable": false,
+            "type": {
+              "kind": "bool"
+            }
+          },
+          {
+            "name": "arming_window",
+            "nullable": true,
+            "type": {
+              "fields": [
+                {
+                  "name": "armed",
+                  "nullable": true,
+                  "type": {
+                    "kind": "bool"
+                  }
+                },
+                {
+                  "name": "arm_delay_ms",
+                  "nullable": true,
+                  "type": {
+                    "kind": "float64"
+                  }
+                },
+                {
+                  "name": "disarm_delay_ms",
+                  "nullable": true,
+                  "type": {
+                    "kind": "float64"
+                  }
+                },
+                {
+                  "name": "rearm_delay_ms",
+                  "nullable": true,
+                  "type": {
+                    "kind": "float64"
+                  }
+                },
+                {
+                  "name": "max_operations",
+                  "nullable": true,
+                  "type": {
+                    "kind": "int32"
+                  }
+                }
+              ],
+              "kind": "struct"
+            }
+          },
+          {
+            "name": "arming_filters",
+            "nullable": true,
+            "type": {
+              "item": {
+                "fields": [
+                  {
+                    "name": "target_type",
+                    "nullable": false,
+                    "type": {
+                      "key": {
+                        "kind": "int32"
+                      },
+                      "kind": "dictionary",
+                      "value": {
+                        "kind": "utf8"
+                      }
+                    }
+                  },
+                  {
+                    "name": "target_id",
+                    "nullable": false,
+                    "type": {
+                      "key": {
+                        "kind": "int32"
+                      },
+                      "kind": "dictionary",
+                      "value": {
+                        "kind": "utf8"
+                      }
+                    }
+                  },
+                  {
+                    "name": "operator",
+                    "nullable": true,
+                    "type": {
+                      "key": {
+                        "kind": "int32"
+                      },
+                      "kind": "dictionary",
+                      "value": {
+                        "kind": "utf8"
+                      }
+                    }
+                  },
+                  {
+                    "name": "threshold",
+                    "nullable": true,
+                    "type": {
+                      "kind": "float64"
+                    }
+                  },
+                  {
+                    "name": "unit",
+                    "nullable": true,
+                    "type": {
+                      "key": {
+                        "kind": "int32"
+                      },
+                      "kind": "dictionary",
+                      "value": {
+                        "kind": "utf8"
+                      }
+                    }
+                  },
+                  {
+                    "name": "source_table",
+                    "nullable": true,
+                    "type": {
+                      "key": {
+                        "kind": "int32"
+                      },
+                      "kind": "dictionary",
+                      "value": {
+                        "kind": "utf8"
+                      }
+                    }
+                  },
+                  {
+                    "name": "source_column",
+                    "nullable": true,
+                    "type": {
+                      "key": {
+                        "kind": "int32"
+                      },
+                      "kind": "dictionary",
+                      "value": {
+                        "kind": "utf8"
+                      }
+                    }
+                  }
+                ],
+                "kind": "struct"
+              },
+              "item_name": "filter",
+              "item_nullable": false,
+              "kind": "list"
+            }
+          },
+          {
+            "name": "arming_conditions",
+            "nullable": true,
+            "type": {
+              "item": {
+                "fields": [
+                  {
+                    "name": "condition_id",
+                    "nullable": false,
+                    "type": {
+                      "key": {
+                        "kind": "int32"
+                      },
+                      "kind": "dictionary",
+                      "value": {
+                        "kind": "utf8"
+                      }
+                    }
+                  },
+                  {
+                    "name": "lhs_ref",
+                    "nullable": false,
+                    "type": {
+                      "kind": "utf8"
+                    }
+                  },
+                  {
+                    "name": "comparator",
+                    "nullable": false,
+                    "type": {
+                      "key": {
+                        "kind": "int32"
+                      },
+                      "kind": "dictionary",
+                      "value": {
+                        "kind": "utf8"
+                      }
+                    }
+                  },
+                  {
+                    "name": "rhs_kind",
+                    "nullable": false,
+                    "type": {
+                      "key": {
+                        "kind": "int32"
+                      },
+                      "kind": "dictionary",
+                      "value": {
+                        "kind": "utf8"
+                      }
+                    }
+                  },
+                  {
+                    "name": "rhs_value",
+                    "nullable": true,
+                    "type": {
+                      "kind": "float64"
+                    }
+                  },
+                  {
+                    "name": "rhs_ref",
+                    "nullable": true,
+                    "type": {
+                      "kind": "utf8"
+                    }
+                  },
+                  {
+                    "name": "duration_ms",
+                    "nullable": true,
+                    "type": {
+                      "kind": "float64"
+                    }
+                  }
+                ],
+                "kind": "struct"
+              },
+              "item_name": "condition",
+              "item_nullable": false,
+              "kind": "list"
+            }
+          },
+          {
+            "name": "trigger_filters",
+            "nullable": true,
+            "type": {
+              "item": {
+                "fields": [
+                  {
+                    "name": "target_type",
+                    "nullable": false,
+                    "type": {
+                      "key": {
+                        "kind": "int32"
+                      },
+                      "kind": "dictionary",
+                      "value": {
+                        "kind": "utf8"
+                      }
+                    }
+                  },
+                  {
+                    "name": "target_id",
+                    "nullable": false,
+                    "type": {
+                      "key": {
+                        "kind": "int32"
+                      },
+                      "kind": "dictionary",
+                      "value": {
+                        "kind": "utf8"
+                      }
+                    }
+                  },
+                  {
+                    "name": "operator",
+                    "nullable": true,
+                    "type": {
+                      "key": {
+                        "kind": "int32"
+                      },
+                      "kind": "dictionary",
+                      "value": {
+                        "kind": "utf8"
+                      }
+                    }
+                  },
+                  {
+                    "name": "threshold",
+                    "nullable": true,
+                    "type": {
+                      "kind": "float64"
+                    }
+                  },
+                  {
+                    "name": "unit",
+                    "nullable": true,
+                    "type": {
+                      "key": {
+                        "kind": "int32"
+                      },
+                      "kind": "dictionary",
+                      "value": {
+                        "kind": "utf8"
+                      }
+                    }
+                  },
+                  {
+                    "name": "source_table",
+                    "nullable": true,
+                    "type": {
+                      "key": {
+                        "kind": "int32"
+                      },
+                      "kind": "dictionary",
+                      "value": {
+                        "kind": "utf8"
+                      }
+                    }
+                  },
+                  {
+                    "name": "source_column",
+                    "nullable": true,
+                    "type": {
+                      "key": {
+                        "kind": "int32"
+                      },
+                      "kind": "dictionary",
+                      "value": {
+                        "kind": "utf8"
+                      }
+                    }
+                  }
+                ],
+                "kind": "struct"
+              },
+              "item_name": "filter",
+              "item_nullable": false,
+              "kind": "list"
+            }
+          },
+          {
+            "name": "trigger_conditions",
+            "nullable": false,
+            "type": {
+              "item": {
+                "fields": [
+                  {
+                    "name": "condition_id",
+                    "nullable": false,
+                    "type": {
+                      "key": {
+                        "kind": "int32"
+                      },
+                      "kind": "dictionary",
+                      "value": {
+                        "kind": "utf8"
+                      }
+                    }
+                  },
+                  {
+                    "name": "lhs_ref",
+                    "nullable": false,
+                    "type": {
+                      "kind": "utf8"
+                    }
+                  },
+                  {
+                    "name": "comparator",
+                    "nullable": false,
+                    "type": {
+                      "key": {
+                        "kind": "int32"
+                      },
+                      "kind": "dictionary",
+                      "value": {
+                        "kind": "utf8"
+                      }
+                    }
+                  },
+                  {
+                    "name": "rhs_kind",
+                    "nullable": false,
+                    "type": {
+                      "key": {
+                        "kind": "int32"
+                      },
+                      "kind": "dictionary",
+                      "value": {
+                        "kind": "utf8"
+                      }
+                    }
+                  },
+                  {
+                    "name": "rhs_value",
+                    "nullable": true,
+                    "type": {
+                      "kind": "float64"
+                    }
+                  },
+                  {
+                    "name": "rhs_ref",
+                    "nullable": true,
+                    "type": {
+                      "kind": "utf8"
+                    }
+                  },
+                  {
+                    "name": "duration_ms",
+                    "nullable": true,
+                    "type": {
+                      "kind": "float64"
+                    }
+                  }
+                ],
+                "kind": "struct"
+              },
+              "item_name": "condition",
+              "item_nullable": false,
+              "kind": "list"
+            }
+          },
+          {
+            "name": "sequence_steps",
+            "nullable": false,
+            "type": {
+              "item": {
+                "fields": [
+                  {
+                    "name": "step_index",
+                    "nullable": false,
+                    "type": {
+                      "kind": "int32"
+                    }
+                  },
+                  {
+                    "name": "delay_ms",
+                    "nullable": true,
+                    "type": {
+                      "kind": "float64"
+                    }
+                  },
+                  {
+                    "name": "priority",
+                    "nullable": true,
+                    "type": {
+                      "kind": "int32"
+                    }
+                  },
+                  {
+                    "name": "merit_order",
+                    "nullable": true,
+                    "type": {
+                      "kind": "int32"
+                    }
+                  },
+                  {
+                    "name": "action_set",
+                    "nullable": false,
+                    "type": {
+                      "item": {
+                        "fields": [
+                          {
+                            "name": "element_id",
+                            "nullable": false,
+                            "type": {
+                              "key": {
+                                "kind": "int32"
+                              },
+                              "kind": "dictionary",
+                              "value": {
+                                "kind": "utf8"
+                              }
+                            }
+                          },
+                          {
+                            "name": "action_type",
+                            "nullable": false,
+                            "type": {
+                              "key": {
+                                "kind": "int32"
+                              },
+                              "kind": "dictionary",
+                              "value": {
+                                "kind": "utf8"
+                              }
+                            }
+                          },
+                          {
+                            "name": "target_type",
+                            "nullable": false,
+                            "type": {
+                              "key": {
+                                "kind": "int32"
+                              },
+                              "kind": "dictionary",
+                              "value": {
+                                "kind": "utf8"
+                              }
+                            }
+                          },
+                          {
+                            "name": "target_id",
+                            "nullable": false,
+                            "type": {
+                              "key": {
+                                "kind": "int32"
+                              },
+                              "kind": "dictionary",
+                              "value": {
+                                "kind": "utf8"
+                              }
+                            }
+                          },
+                          {
+                            "name": "amount_mw",
+                            "nullable": true,
+                            "type": {
+                              "kind": "float64"
+                            }
+                          },
+                          {
+                            "name": "amount_pct",
+                            "nullable": true,
+                            "type": {
+                              "kind": "float64"
+                            }
+                          },
+                          {
+                            "name": "status_change",
+                            "nullable": true,
+                            "type": {
+                              "kind": "bool"
+                            }
+                          },
+                          {
+                            "name": "params",
+                            "nullable": true,
+                            "type": {
+                              "entries": {
+                                "fields": [
+                                  {
+                                    "name": "key",
+                                    "nullable": false,
+                                    "type": {
+                                      "kind": "utf8"
+                                    }
+                                  },
+                                  {
+                                    "name": "value",
+                                    "nullable": false,
+                                    "type": {
+                                      "kind": "float64"
+                                    }
+                                  }
+                                ],
+                                "kind": "struct"
+                              },
+                              "entry_name": "entries",
+                              "entry_nullable": false,
+                              "keys_sorted": false,
+                              "kind": "map"
+                            }
+                          }
+                        ],
+                        "kind": "struct"
+                      },
+                      "item_name": "action",
+                      "item_nullable": false,
+                      "kind": "list"
+                    }
+                  },
+                  {
+                    "name": "rollback_on_fail",
+                    "nullable": true,
+                    "type": {
+                      "kind": "bool"
+                    }
+                  }
+                ],
+                "kind": "struct"
+              },
+              "item_name": "step",
+              "item_nullable": false,
+              "kind": "list"
+            }
+          },
+          {
+            "name": "remedial_action",
+            "nullable": true,
+            "type": {
+              "key": {
+                "kind": "int32"
+              },
+              "kind": "dictionary",
+              "value": {
+                "kind": "utf8"
+              }
+            }
+          },
+          {
+            "name": "scheme_kind",
+            "nullable": true,
+            "type": {
+              "key": {
+                "kind": "int32"
+              },
+              "kind": "dictionary",
+              "value": {
+                "kind": "utf8"
+              }
+            }
+          },
+          {
+            "name": "remedial_action_elements",
+            "nullable": true,
+            "type": {
+              "item": {
+                "fields": [
+                  {
+                    "name": "element_id",
+                    "nullable": false,
+                    "type": {
+                      "key": {
+                        "kind": "int32"
+                      },
+                      "kind": "dictionary",
+                      "value": {
+                        "kind": "utf8"
+                      }
+                    }
+                  },
+                  {
+                    "name": "action_type",
+                    "nullable": false,
+                    "type": {
+                      "key": {
+                        "kind": "int32"
+                      },
+                      "kind": "dictionary",
+                      "value": {
+                        "kind": "utf8"
+                      }
+                    }
+                  },
+                  {
+                    "name": "target_type",
+                    "nullable": false,
+                    "type": {
+                      "key": {
+                        "kind": "int32"
+                      },
+                      "kind": "dictionary",
+                      "value": {
+                        "kind": "utf8"
+                      }
+                    }
+                  },
+                  {
+                    "name": "target_id",
+                    "nullable": false,
+                    "type": {
+                      "key": {
+                        "kind": "int32"
+                      },
+                      "kind": "dictionary",
+                      "value": {
+                        "kind": "utf8"
+                      }
+                    }
+                  },
+                  {
+                    "name": "amount_mw",
+                    "nullable": true,
+                    "type": {
+                      "kind": "float64"
+                    }
+                  },
+                  {
+                    "name": "amount_pct",
+                    "nullable": true,
+                    "type": {
+                      "kind": "float64"
+                    }
+                  },
+                  {
+                    "name": "status_change",
+                    "nullable": true,
+                    "type": {
+                      "kind": "bool"
+                    }
+                  },
+                  {
+                    "name": "params",
+                    "nullable": true,
+                    "type": {
+                      "entries": {
+                        "fields": [
+                          {
+                            "name": "key",
+                            "nullable": false,
+                            "type": {
+                              "kind": "utf8"
+                            }
+                          },
+                          {
+                            "name": "value",
+                            "nullable": false,
+                            "type": {
+                              "kind": "float64"
+                            }
+                          }
+                        ],
+                        "kind": "struct"
+                      },
+                      "entry_name": "entries",
+                      "entry_nullable": false,
+                      "keys_sorted": false,
+                      "kind": "map"
+                    }
+                  }
+                ],
+                "kind": "struct"
+              },
+              "item_name": "action",
+              "item_nullable": false,
+              "kind": "list"
+            }
+          },
+          {
+            "name": "applicable_contingency_ids",
+            "nullable": true,
+            "type": {
+              "item": {
+                "kind": "utf8"
+              },
+              "item_name": "item",
+              "item_nullable": false,
+              "kind": "list"
+            }
+          },
+          {
+            "name": "notes",
+            "nullable": true,
+            "type": {
+              "kind": "utf8"
+            }
+          },
+          {
+            "name": "data_confidence",
+            "nullable": false,
+            "type": {
+              "key": {
+                "kind": "int32"
+              },
+              "kind": "dictionary",
+              "value": {
+                "kind": "utf8"
+              }
+            }
+          },
+          {
+            "name": "params",
+            "nullable": true,
+            "type": {
+              "entries": {
+                "fields": [
+                  {
+                    "name": "key",
+                    "nullable": false,
+                    "type": {
+                      "kind": "utf8"
+                    }
+                  },
+                  {
+                    "name": "value",
+                    "nullable": false,
+                    "type": {
+                      "kind": "float64"
+                    }
+                  }
+                ],
+                "kind": "struct"
+              },
+              "entry_name": "entries",
+              "entry_nullable": false,
+              "keys_sorted": false,
+              "kind": "map"
+            }
+          }
+        ]
+      }
+    ],
+    "scenario_context": [
+      {
+        "fields": [
+          {
+            "name": "scenario_context_id",
+            "nullable": false,
+            "type": {
+              "kind": "int32"
+            }
+          },
+          {
+            "name": "case_id",
+            "nullable": false,
+            "type": {
+              "kind": "utf8"
+            }
+          },
+          {
+            "name": "source_type",
+            "nullable": false,
+            "type": {
+              "kind": "utf8"
+            }
+          },
+          {
+            "name": "priority",
+            "nullable": false,
+            "type": {
+              "kind": "utf8"
+            }
+          },
+          {
+            "name": "violation_type",
+            "nullable": true,
+            "type": {
+              "kind": "utf8"
+            }
+          },
+          {
+            "name": "nerc_recovery_status",
+            "nullable": true,
+            "type": {
+              "kind": "utf8"
+            }
+          },
+          {
+            "name": "recovery_time_min",
+            "nullable": true,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "cleared_by_reserves",
+            "nullable": true,
+            "type": {
+              "kind": "bool"
+            }
+          },
+          {
+            "name": "planning_feedback_flag",
+            "nullable": false,
+            "type": {
+              "kind": "bool"
+            }
+          },
+          {
+            "name": "planning_assumption_violated",
+            "nullable": true,
+            "type": {
+              "kind": "utf8"
+            }
+          },
+          {
+            "name": "recommended_action",
+            "nullable": true,
+            "type": {
+              "kind": "utf8"
+            }
+          },
+          {
+            "name": "investigation_summary",
+            "nullable": true,
+            "type": {
+              "kind": "utf8"
+            }
+          },
+          {
+            "name": "load_forecast_error_pct",
+            "nullable": true,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "created_timestamp_utc",
+            "nullable": false,
+            "type": {
+              "kind": "timestamp",
+              "tz": "UTC",
+              "unit": "us"
+            }
+          },
+          {
+            "name": "params",
+            "nullable": true,
+            "type": {
+              "entries": {
+                "fields": [
+                  {
+                    "name": "key",
+                    "nullable": false,
+                    "type": {
+                      "kind": "utf8"
+                    }
+                  },
+                  {
+                    "name": "value",
+                    "nullable": false,
+                    "type": {
+                      "kind": "float64"
+                    }
+                  }
+                ],
+                "kind": "struct"
+              },
+              "entry_name": "entries",
+              "entry_nullable": false,
+              "keys_sorted": false,
+              "kind": "map"
+            }
+          }
+        ]
+      }
+    ],
+    "switch_detail": [
+      {
+        "fields": [
+          {
+            "name": "switch_id",
+            "nullable": false,
+            "type": {
+              "key": {
+                "kind": "int32"
+              },
+              "kind": "dictionary",
+              "value": {
+                "kind": "utf8"
+              }
+            }
+          },
+          {
+            "name": "name",
+            "nullable": true,
+            "type": {
+              "key": {
+                "kind": "uint32"
+              },
+              "kind": "dictionary",
+              "value": {
+                "kind": "utf8"
+              }
+            }
+          },
+          {
+            "name": "switch_type",
+            "nullable": false,
+            "type": {
+              "key": {
+                "kind": "int32"
+              },
+              "kind": "dictionary",
+              "value": {
+                "kind": "utf8"
+              }
+            }
+          },
+          {
+            "name": "is_open",
+            "nullable": true,
+            "type": {
+              "kind": "bool"
+            }
+          },
+          {
+            "name": "normal_open",
+            "nullable": true,
+            "type": {
+              "kind": "bool"
+            }
+          },
+          {
+            "name": "retained",
+            "nullable": true,
+            "type": {
+              "kind": "bool"
+            }
+          }
+        ]
+      }
+    ],
+    "switched_shunt_banks": [
+      {
+        "fields": [
+          {
+            "name": "shunt_id",
+            "nullable": false,
+            "type": {
+              "kind": "int32"
+            }
+          },
+          {
+            "name": "bank_id",
+            "nullable": false,
+            "type": {
+              "kind": "int32"
+            }
+          },
+          {
+            "name": "b_mvar",
+            "nullable": false,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "status",
+            "nullable": false,
+            "type": {
+              "kind": "bool"
+            }
+          },
+          {
+            "name": "step",
+            "nullable": false,
+            "type": {
+              "kind": "int32"
+            }
+          }
+        ]
+      },
+      {
+        "fields": [
+          {
+            "name": "bank_id",
+            "nullable": true,
+            "type": {
+              "kind": "int32"
+            }
+          },
+          {
+            "name": "bus_id",
+            "nullable": true,
+            "type": {
+              "kind": "int32"
+            }
+          },
+          {
+            "name": "status",
+            "nullable": true,
+            "type": {
+              "kind": "bool"
+            }
+          },
+          {
+            "name": "v_low",
+            "nullable": true,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "v_high",
+            "nullable": true,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "b_steps",
+            "nullable": true,
+            "type": {
+              "item": {
+                "kind": "float64"
+              },
+              "item_name": "item",
+              "item_nullable": true,
+              "kind": "list"
+            }
+          },
+          {
+            "name": "current_step",
+            "nullable": true,
+            "type": {
+              "kind": "int32"
+            }
+          },
+          {
+            "name": "name",
+            "nullable": true,
+            "type": {
+              "kind": "utf8"
+            }
+          }
+        ]
+      }
+    ],
+    "switched_shunts": [
+      {
+        "fields": [
+          {
+            "name": "bus_id",
+            "nullable": false,
+            "type": {
+              "kind": "int32"
+            }
+          },
+          {
+            "name": "status",
+            "nullable": false,
+            "type": {
+              "kind": "bool"
+            }
+          },
+          {
+            "name": "v_low",
+            "nullable": false,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "v_high",
+            "nullable": false,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "b_steps",
+            "nullable": false,
+            "type": {
+              "item": {
+                "kind": "float64"
+              },
+              "item_name": "item",
+              "item_nullable": false,
+              "kind": "list"
+            }
+          },
+          {
+            "name": "current_step",
+            "nullable": false,
+            "type": {
+              "kind": "int32"
+            }
+          },
+          {
+            "name": "b_init_pu",
+            "nullable": true,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "shunt_id",
+            "nullable": true,
+            "type": {
+              "key": {
+                "kind": "int32"
+              },
+              "kind": "dictionary",
+              "value": {
+                "kind": "utf8"
+              }
+            }
+          },
+          {
+            "name": "mrid",
+            "nullable": true,
+            "type": {
+              "kind": "utf8"
+            }
+          },
+          {
+            "name": "shunt_control_mode",
+            "nullable": true,
+            "type": {
+              "key": {
+                "kind": "int32"
+              },
+              "kind": "dictionary",
+              "value": {
+                "kind": "utf8"
+              }
+            }
+          },
+          {
+            "name": "regulated_bus_id",
+            "nullable": true,
+            "type": {
+              "kind": "int32"
+            }
+          }
+        ]
+      }
+    ],
+    "switched_shunts_solved": [
+      {
+        "fields": [
+          {
+            "name": "bus_id",
+            "nullable": false,
+            "type": {
+              "kind": "int32"
+            }
+          },
+          {
+            "name": "shunt_id",
+            "nullable": true,
+            "type": {
+              "key": {
+                "kind": "int32"
+              },
+              "kind": "dictionary",
+              "value": {
+                "kind": "utf8"
+              }
+            }
+          },
+          {
+            "name": "current_step_solved",
+            "nullable": true,
+            "type": {
+              "kind": "int32"
+            }
+          },
+          {
+            "name": "b_pu_solved",
+            "nullable": true,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "provenance",
+            "nullable": true,
+            "type": {
+              "key": {
+                "kind": "int32"
+              },
+              "kind": "dictionary",
+              "value": {
+                "kind": "utf8"
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "topology_changes": [
+      {
+        "fields": [
+          {
+            "name": "topology_change_id",
+            "nullable": false,
+            "type": {
+              "kind": "int32"
+            }
+          },
+          {
+            "name": "contingency_id",
+            "nullable": true,
+            "type": {
+              "key": {
+                "kind": "int32"
+              },
+              "kind": "dictionary",
+              "value": {
+                "kind": "utf8"
+              }
+            }
+          },
+          {
+            "name": "change_type",
+            "nullable": false,
+            "type": {
+              "key": {
+                "kind": "int32"
+              },
+              "kind": "dictionary",
+              "value": {
+                "kind": "utf8"
+              }
+            }
+          },
+          {
+            "name": "affected_bus_ids",
+            "nullable": false,
+            "type": {
+              "item": {
+                "kind": "int32"
+              },
+              "item_name": "item",
+              "item_nullable": false,
+              "kind": "list"
+            }
+          },
+          {
+            "name": "resulting_islands",
+            "nullable": true,
+            "type": {
+              "item": {
+                "fields": [
+                  {
+                    "name": "island_index",
+                    "nullable": false,
+                    "type": {
+                      "kind": "int32"
+                    }
+                  },
+                  {
+                    "name": "bus_ids",
+                    "nullable": false,
+                    "type": {
+                      "item": {
+                        "kind": "int32"
+                      },
+                      "item_name": "item",
+                      "item_nullable": false,
+                      "kind": "list"
+                    }
+                  },
+                  {
+                    "name": "energized",
+                    "nullable": true,
+                    "type": {
+                      "kind": "bool"
+                    }
+                  }
+                ],
+                "kind": "struct"
+              },
+              "item_name": "island",
+              "item_nullable": false,
+              "kind": "list"
+            }
+          },
+          {
+            "name": "isolated_element_count",
+            "nullable": true,
+            "type": {
+              "kind": "int32"
+            }
+          },
+          {
+            "name": "summary",
+            "nullable": true,
+            "type": {
+              "kind": "utf8"
+            }
+          },
+          {
+            "name": "provenance",
+            "nullable": true,
+            "type": {
+              "key": {
+                "kind": "int32"
+              },
+              "kind": "dictionary",
+              "value": {
+                "kind": "utf8"
+              }
+            }
+          },
+          {
+            "name": "params",
+            "nullable": true,
+            "type": {
+              "entries": {
+                "fields": [
+                  {
+                    "name": "key",
+                    "nullable": false,
+                    "type": {
+                      "kind": "utf8"
+                    }
+                  },
+                  {
+                    "name": "value",
+                    "nullable": false,
+                    "type": {
+                      "kind": "float64"
+                    }
+                  }
+                ],
+                "kind": "struct"
+              },
+              "entry_name": "entries",
+              "entry_nullable": false,
+              "keys_sorted": false,
+              "kind": "map"
+            }
+          },
+          {
+            "name": "change_source",
+            "nullable": true,
+            "type": {
+              "key": {
+                "kind": "int32"
+              },
+              "kind": "dictionary",
+              "value": {
+                "kind": "utf8"
+              }
+            }
+          },
+          {
+            "name": "applied_phase",
+            "nullable": true,
+            "type": {
+              "key": {
+                "kind": "int32"
+              },
+              "kind": "dictionary",
+              "value": {
+                "kind": "utf8"
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "transformers_2w": [
+      {
+        "fields": [
+          {
+            "name": "from_bus_id",
+            "nullable": false,
+            "type": {
+              "kind": "int32"
+            }
+          },
+          {
+            "name": "to_bus_id",
+            "nullable": false,
+            "type": {
+              "kind": "int32"
+            }
+          },
+          {
+            "name": "ckt",
+            "nullable": false,
+            "type": {
+              "key": {
+                "kind": "int32"
+              },
+              "kind": "dictionary",
+              "value": {
+                "kind": "utf8"
+              }
+            }
+          },
+          {
+            "name": "r",
+            "nullable": false,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "x",
+            "nullable": false,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "winding1_r",
+            "nullable": false,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "winding1_x",
+            "nullable": false,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "winding2_r",
+            "nullable": false,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "winding2_x",
+            "nullable": false,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "g",
+            "nullable": false,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "b",
+            "nullable": false,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "tap_ratio",
+            "nullable": false,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "nominal_tap_ratio",
+            "nullable": false,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "phase_shift",
+            "nullable": false,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "vector_group",
+            "nullable": false,
+            "type": {
+              "key": {
+                "kind": "int32"
+              },
+              "kind": "dictionary",
+              "value": {
+                "kind": "utf8"
+              }
+            }
+          },
+          {
+            "name": "rate_a",
+            "nullable": false,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "rate_b",
+            "nullable": false,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "rate_c",
+            "nullable": false,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "status",
+            "nullable": false,
+            "type": {
+              "kind": "bool"
+            }
+          },
+          {
+            "name": "name",
+            "nullable": true,
+            "type": {
+              "key": {
+                "kind": "uint32"
+              },
+              "kind": "dictionary",
+              "value": {
+                "kind": "utf8"
+              }
+            }
+          },
+          {
+            "name": "from_nominal_kv",
+            "nullable": false,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "to_nominal_kv",
+            "nullable": false,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "mrid",
+            "nullable": true,
+            "type": {
+              "kind": "utf8"
+            }
+          },
+          {
+            "name": "is_secured",
+            "nullable": true,
+            "type": {
+              "kind": "bool"
+            }
+          },
+          {
+            "name": "is_bes",
+            "nullable": true,
+            "type": {
+              "kind": "bool"
+            }
+          },
+          {
+            "name": "is_bps",
+            "nullable": true,
+            "type": {
+              "kind": "bool"
+            }
+          },
+          {
+            "name": "is_bptf",
+            "nullable": true,
+            "type": {
+              "kind": "bool"
+            }
+          },
+          {
+            "name": "tap_min",
+            "nullable": true,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "tap_max",
+            "nullable": true,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "tap_limit_unit",
+            "nullable": true,
+            "type": {
+              "key": {
+                "kind": "int32"
+              },
+              "kind": "dictionary",
+              "value": {
+                "kind": "utf8"
+              }
+            }
+          },
+          {
+            "name": "n_positions",
+            "nullable": true,
+            "type": {
+              "kind": "int32"
+            }
+          },
+          {
+            "name": "tap_step",
+            "nullable": true,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "tap_control_mode",
+            "nullable": true,
+            "type": {
+              "kind": "int32"
+            }
+          },
+          {
+            "name": "regulated_bus_id",
+            "nullable": true,
+            "type": {
+              "kind": "int32"
+            }
+          },
+          {
+            "name": "operation_time_min",
+            "nullable": true,
+            "type": {
+              "kind": "float64"
+            }
+          }
+        ]
+      }
+    ],
+    "transformers_3w": [
+      {
+        "fields": [
+          {
+            "name": "bus_h_id",
+            "nullable": false,
+            "type": {
+              "kind": "int32"
+            }
+          },
+          {
+            "name": "bus_m_id",
+            "nullable": false,
+            "type": {
+              "kind": "int32"
+            }
+          },
+          {
+            "name": "bus_l_id",
+            "nullable": false,
+            "type": {
+              "kind": "int32"
+            }
+          },
+          {
+            "name": "star_bus_id",
+            "nullable": true,
+            "type": {
+              "kind": "int32"
+            }
+          },
+          {
+            "name": "ckt",
+            "nullable": false,
+            "type": {
+              "key": {
+                "kind": "int32"
+              },
+              "kind": "dictionary",
+              "value": {
+                "kind": "utf8"
+              }
+            }
+          },
+          {
+            "name": "r_hm",
+            "nullable": false,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "x_hm",
+            "nullable": false,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "r_hl",
+            "nullable": false,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "x_hl",
+            "nullable": false,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "r_ml",
+            "nullable": false,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "x_ml",
+            "nullable": false,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "tap_h",
+            "nullable": false,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "tap_m",
+            "nullable": false,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "tap_l",
+            "nullable": false,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "phase_shift",
+            "nullable": false,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "vector_group",
+            "nullable": false,
+            "type": {
+              "key": {
+                "kind": "int32"
+              },
+              "kind": "dictionary",
+              "value": {
+                "kind": "utf8"
+              }
+            }
+          },
+          {
+            "name": "rate_a",
+            "nullable": false,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "rate_b",
+            "nullable": false,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "rate_c",
+            "nullable": false,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "status",
+            "nullable": false,
+            "type": {
+              "kind": "bool"
+            }
+          },
+          {
+            "name": "name",
+            "nullable": true,
+            "type": {
+              "key": {
+                "kind": "uint32"
+              },
+              "kind": "dictionary",
+              "value": {
+                "kind": "utf8"
+              }
+            }
+          },
+          {
+            "name": "nominal_kv_h",
+            "nullable": false,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "nominal_kv_m",
+            "nullable": false,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "nominal_kv_l",
+            "nullable": false,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "mrid",
+            "nullable": true,
+            "type": {
+              "kind": "utf8"
+            }
+          },
+          {
+            "name": "is_secured",
+            "nullable": true,
+            "type": {
+              "kind": "bool"
+            }
+          },
+          {
+            "name": "is_bes",
+            "nullable": true,
+            "type": {
+              "kind": "bool"
+            }
+          },
+          {
+            "name": "is_bps",
+            "nullable": true,
+            "type": {
+              "kind": "bool"
+            }
+          },
+          {
+            "name": "is_bptf",
+            "nullable": true,
+            "type": {
+              "kind": "bool"
+            }
+          },
+          {
+            "name": "tap_min",
+            "nullable": true,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "tap_max",
+            "nullable": true,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "tap_limit_unit",
+            "nullable": true,
+            "type": {
+              "key": {
+                "kind": "int32"
+              },
+              "kind": "dictionary",
+              "value": {
+                "kind": "utf8"
+              }
+            }
+          },
+          {
+            "name": "n_positions",
+            "nullable": true,
+            "type": {
+              "kind": "int32"
+            }
+          },
+          {
+            "name": "tap_step",
+            "nullable": true,
+            "type": {
+              "kind": "float64"
+            }
+          },
+          {
+            "name": "tap_control_mode",
+            "nullable": true,
+            "type": {
+              "kind": "int32"
+            }
+          },
+          {
+            "name": "regulated_bus_id",
+            "nullable": true,
+            "type": {
+              "kind": "int32"
+            }
+          },
+          {
+            "name": "operation_time_min",
+            "nullable": true,
+            "type": {
+              "kind": "float64"
+            }
+          }
+        ]
+      }
+    ],
+    "zones": [
+      {
+        "fields": [
+          {
+            "name": "zone_id",
+            "nullable": false,
+            "type": {
+              "kind": "int32"
+            }
+          },
+          {
+            "name": "name",
+            "nullable": false,
+            "type": {
+              "key": {
+                "kind": "int32"
+              },
+              "kind": "dictionary",
+              "value": {
+                "kind": "utf8"
+              }
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "validation_modes": [
+    "topology_only",
+    "solved_ready",
+    "converter_export"
+  ]
+}
