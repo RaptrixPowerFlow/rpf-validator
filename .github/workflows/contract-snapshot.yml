@@ -9,5 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Reject a hand-edited v0.14.5 snapshot
-        run: sha256sum -c src/rpf_validator/contract_v0145.sha256
+      - name: Reject a hand-edited contract snapshot
+        run: |
+          sha256sum -c src/rpf_validator/contract_v0145.sha256
+          sha256sum -c src/rpf_validator/contract_v0146.sha256

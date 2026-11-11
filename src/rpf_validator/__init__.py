@@ -25,7 +25,7 @@ __all__ = [
 
 
 def validate(path: str | Path) -> ValidationReport:
-    """Check ``path`` against the vendored v0.14.5 contract."""
+    """Check ``path`` against the vendored snapshot for its version stamp."""
 
     return validate_loaded(load(path))
 

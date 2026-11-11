@@ -134,6 +134,53 @@ def test_converter_export_validation_mode_is_accepted(tmp_path):
     assert report.ok, report.to_text()
 
 
+def test_v0146_screening_fields_and_custom_preset(tmp_path):
+    from tests.fixture_writer import build_screening_case
+
+    good = tmp_path / "good.rpf"
+    build_screening_case(
+        good,
+        "a" * 64,
+        [
+            {
+                "bus_id": 1,
+                "it_pe_fraction": 0.72,
+                "cooling_fraction": 0.22,
+                "cooling_trip_v_pu": 0.35,
+                "multi_sag_count": 2,
+                "multi_sag_window_s": 10.0,
+                "envelope_preset": "ercot_nogrr_282_2026",
+                "model_verified_unix": 1793491200,
+                "qualified_change_pending": False,
+            },
+            {
+                "bus_id": 2,
+                "envelope_preset": "utility_internal_v3",
+            },
+        ],
+    )
+    report = validate(good)
+    assert report.ok, report.to_text()
+    assert any(item.code == "UNRECOGNIZED_ENVELOPE_PRESET" for item in report.warnings)
+
+    bad = tmp_path / "bad.rpf"
+    build_screening_case(
+        bad,
+        "b" * 64,
+        [{"bus_id": 1, "it_pe_fraction": 0.8, "cooling_fraction": 0.3}],
+    )
+    assert "COMPUTATIONAL_LOAD_PROFILE_RANGE" in _codes(bad)
+
+
+def test_v0145_file_still_validates(tmp_path):
+    from tests.fixture_writer import build_planning
+
+    dest = tmp_path / "legacy.rpf"
+    build_planning(dest, "c" * 64)
+    report = validate(dest)
+    assert report.ok, report.to_text()
+
+
 def test_unprefixed_version_stamp_is_accepted(tmp_path):
     dest = tmp_path / "plain.rpf"
     rewrite(GOLDENS / "planning_tiny.rpf", dest, unprefixed_version)

@@ -1,15 +1,15 @@
-# Contract snapshot v0.14.5
+# Contract snapshots v0.14.6 and v0.14.5
 
-The released `rpf-validator` package validates `.rpf` files against the vendored snapshot `src/rpf_validator/contract_v0145.json`. Users and CI do not clone `raptrix-cim-rs` and do not run Rust. A live checkout of that repository is a maintainer aid for generating the next snapshot. The released validator never reads it.
+The released `rpf-validator` package validates `.rpf` files against vendored snapshots. A file stamped `v0.14.6` or `0.14.6` uses `src/rpf_validator/contract_v0146.json`. A file stamped `v0.14.5` or `0.14.5` uses `src/rpf_validator/contract_v0145.json`. Users and CI do not clone `raptrix-cim-rs` and do not run Rust. A live checkout of that repository is a maintainer aid for generating the next snapshot. The released validator never reads it.
 
 ## Pin
 
-| | |
-| --- | --- |
-| Snapshot | `contract_v0145.json` |
-| Schema stamp | `v0.14.5` (readers also accept `0.14.5`) |
-| Source repository | https://github.com/RaptrixPowerFlow/raptrix-cim-rs |
-| Source commit | `0d4d48f` |
+| | v0.14.6 | v0.14.5 |
+| --- | --- | --- |
+| Snapshot | `contract_v0146.json` | `contract_v0145.json` |
+| Schema stamp | `v0.14.6` (also `0.14.6`) | `v0.14.5` (also `0.14.5`) |
+| Source repository | https://github.com/RaptrixPowerFlow/raptrix-cim-rs | same |
+| Source commit | `308fcc2` | `0d4d48f` |
 
 The authority for the wire contract remains `docs/schema-contract.md` and `raptrix-cim-arrow/src/schema.rs` in `raptrix-cim-rs`. This package copies the table layouts, version tokens, and the closed metadata enums from that commit. Do not hand-edit field types in the JSON. Do not point the package at whatever is on `main`.
 
@@ -17,7 +17,7 @@ The authority for the wire contract remains `docs/schema-contract.md` and `raptr
 
 Structural conformance only:
 
-- Version stamp `v0.14.5` or `0.14.5`. If both `raptrix.version` and `rpf_version` are present, they must agree.
+- Version stamp `v0.14.6`, `0.14.6`, `v0.14.5`, or `0.14.5`. If both `raptrix.version` and `rpf_version` are present, they must agree. The stamp selects the snapshot.
 - The 18 canonical root tables, plus required `dc_converters`, present as struct columns even at zero rows. Tables are matched by name. Unknown trailing root columns are ignored.
 - Column names and Arrow types are a prefix of a canonical layout or a documented read dialect. A missing field is an error only when that contract field is non-nullable.
 - Required file metadata and agreement with the single `metadata` row for `case_mode`, `case_fingerprint`, and `validation_mode`. A blank table cell does not fail the file when the file-level key is set; that mismatch is a warning. `rpf.validation_mode` accepts `topology_only`, `solved_ready`, and `converter_export` (the token used by converter and solver exports, including the v0.14.5 funnel demo).
@@ -26,6 +26,8 @@ Structural conformance only:
 - `rpf.rows.<table>` when the key is present: it must be an integer no greater than the struct length. A missing key falls back to the struct length and produces a warning.
 - Dynamics `params` vocabulary (`p1`..`pN`, no `p0`). A `params_named=1` row may carry dictionary names and the positional tail together. `WTTQA1` is rejected only when those named breakpoints are still `p1`..`p4` and `pwr1`..`pwr4` are absent.
 - Non-null bus ids on `branches`, `generators`, `loads`, `transformers_2w`, and `transformers_3w` (`bus_h_id`, `bus_m_id`, `bus_l_id`). `fixed_shunts` and `switched_shunts` are not checked in v1.
+- When `computational_load_profiles` is present, the v0.14.6 screening columns are range-checked: fractions in \[0, 1\] and summing to at most 1, `cooling_trip_v_pu` in (0, 2\], `multi_sag_count` in 0..255, `multi_sag_window_s` ≥ 0 and > 0 when the count is positive, and `model_verified_unix` ≥ 0.
+- `envelope_preset` is an open string. Reference tags are `nerc_prc_029_2026`, `pjm_att_d2_2026`, `ercot_nogrr_282_2026`, and `wecc_llb_2026`. A custom tag loads. An unrecognized tag adds warning `UNRECOGNIZED_ENVELOPE_PRESET` and the file still passes. A blank tag is an error. No curve is stored in the tag. A v0.14.5 file has none of these columns.
 
 The stored fingerprint is required and non-empty. It is not recomputed. The CIM writer hashes source paths, sizes, and mtimes (`rpf_case_fingerprint_v1`), which is not a content hash of the `.rpf`.
 

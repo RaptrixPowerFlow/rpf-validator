@@ -9,7 +9,7 @@ from typing import Any
 import pyarrow as pa
 
 from rpf_validator.arrowutil import to_pa_type
-from rpf_validator.contract import load_contract
+from rpf_validator.contract import contract_for_stamp, load_contract
 
 _EPOCH = datetime(2026, 1, 1, tzinfo=timezone.utc)
 
@@ -61,7 +61,10 @@ def _table_array(contract: dict[str, Any], name: str, rows: list[dict[str, Any]]
     for field in fields:
         values = _column_values(field, rows, pad)
         arrow_type = to_pa_type(field["type"])
-        arrays.append(pa.array(values, type=arrow_type))
+        array = pa.array(values, type=arrow_type)
+        if array.type != arrow_type:
+            array = array.cast(arrow_type)
+        arrays.append(array)
         pa_fields.append(pa.field(field["name"], arrow_type, nullable=field["nullable"]))
     return pa.StructArray.from_arrays(arrays, fields=pa_fields)
 
@@ -76,8 +79,11 @@ def write_case(
     fingerprint: str,
     extra_metadata: dict[str, str] | None = None,
     contract: dict[str, Any] | None = None,
+    version: str = "v0.14.5",
 ) -> dict[str, int]:
-    contract = contract if contract is not None else load_contract()
+    contract = contract if contract is not None else contract_for_stamp(version)
+    if contract is None:
+        contract = load_contract()
     names = list(contract["required_tables"])
     for name in tables:
         if name not in names:
@@ -85,8 +91,8 @@ def write_case(
     counts = {name: len(tables.get(name, [])) for name in names}
     pad = max(counts.values()) if counts else 0
     metadata: dict[str, str] = {
-        "raptrix.version": "v0.14.5",
-        "rpf_version": "v0.14.5",
+        "raptrix.version": version,
+        "rpf_version": version,
         "rpf.case_mode": case_mode,
         "rpf.solved_state_presence": solved_state_presence,
         "rpf.validation_mode": validation_mode,
@@ -268,6 +274,38 @@ def _contingency() -> dict[str, Any]:
             }
         ],
     }
+
+
+def build_screening_case(
+    path: str | Path,
+    fingerprint: str,
+    profiles: list[dict[str, Any]],
+    *,
+    version: str = "v0.14.6",
+) -> dict[str, int]:
+    """Planning case plus computational_load_profiles rows."""
+
+    tables = _network()
+    tables["metadata"] = [
+        _metadata_row(
+            case_mode="flat_start_planning",
+            presence="not_computed",
+            validation_mode="topology_only",
+            fingerprint=fingerprint,
+            study_name="screening_tiny",
+            planning=True,
+        )
+    ]
+    tables["computational_load_profiles"] = profiles
+    return write_case(
+        path,
+        tables,
+        case_mode="flat_start_planning",
+        solved_state_presence="not_computed",
+        validation_mode="topology_only",
+        fingerprint=fingerprint,
+        version=version,
+    )
 
 
 def build_planning(path: str | Path, fingerprint: str) -> dict[str, int]:

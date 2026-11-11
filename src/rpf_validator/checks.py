@@ -1,4 +1,4 @@
-"""v0.14.5 structural checks."""
+"""v0.14.5 and v0.14.6 structural checks."""
 
 from __future__ import annotations
 
@@ -21,6 +21,8 @@ FACTS_SOLVED_MISSING = "FACTS_SOLVED_MISSING"
 INVALID_ROW_COUNT = "INVALID_ROW_COUNT"
 DYNAMICS_VOCABULARY = "DYNAMICS_VOCABULARY"
 BUS_ID_REFERENCE = "BUS_ID_REFERENCE"
+COMPUTATIONAL_LOAD_PROFILE_RANGE = "COMPUTATIONAL_LOAD_PROFILE_RANGE"
+UNRECOGNIZED_ENVELOPE_PRESET = "UNRECOGNIZED_ENVELOPE_PRESET"
 
 _SOLVED_TABLES = ("buses_solved", "generators_solved", "switched_shunts_solved")
 _P_KEY = re.compile(r"^p[0-9]+$")
@@ -106,7 +108,12 @@ def check_columns(loaded: LoadedFile, contract: dict[str, Any], report: Validati
             if detail is None:
                 break
         else:
-            _error(report, COLUMN_SCHEMA, f"table {name!r} does not match a v0.14.5 schema: {detail}")
+            stamp = contract.get("schema_version", "v0.14.6")
+            _error(
+                report,
+                COLUMN_SCHEMA,
+                f"table {name!r} does not match a {stamp} schema: {detail}",
+            )
 
 
 def _usable(table: LogicalTable | None) -> bool:
@@ -431,6 +438,150 @@ def check_dynamics_generator_warning(loaded: LoadedFile, report: ValidationRepor
             )
 
 
+def _finite(value: Any) -> float | None:
+    if value is None or isinstance(value, bool):
+        return None
+    if isinstance(value, (int, float)):
+        number = float(value)
+        if number != number or number in (float("inf"), float("-inf")):
+            return None
+        return number
+    return None
+
+
+def check_computational_load_profiles(
+    loaded: LoadedFile, contract: dict[str, Any], report: ValidationReport
+) -> None:
+    """Range-check the optional v0.14.6 screening columns when they are present.
+
+    A v0.14.5 file has no such columns. An unknown ``envelope_preset`` is a
+    warning: the column is an open tag, not a closed vocabulary.
+    """
+
+    table = loaded.tables.get("computational_load_profiles")
+    if not _usable(table):
+        return
+    assert table is not None and table.array is not None and table.logical_rows is not None
+    if table.logical_rows <= 0:
+        return
+
+    def values(name: str) -> list[Any] | None:
+        column = struct_field(table.array, name)
+        if column is None:
+            return None
+        return column_python(column)
+
+    it_pe = values("it_pe_fraction")
+    cooling = values("cooling_fraction")
+    trip = values("cooling_trip_v_pu")
+    sag_count = values("multi_sag_count")
+    sag_window = values("multi_sag_window_s")
+    presets = values("envelope_preset")
+    verified = values("model_verified_unix")
+    if all(
+        column is None
+        for column in (it_pe, cooling, trip, sag_count, sag_window, presets, verified)
+    ):
+        return
+
+    known = set(contract.get("known_envelope_presets") or ())
+    rows = table.logical_rows
+    for row in range(rows):
+        it_value = _finite(it_pe[row]) if it_pe is not None else None
+        cool_value = _finite(cooling[row]) if cooling is not None else None
+        if it_pe is not None and it_pe[row] is not None and it_value is None:
+            _error(
+                report,
+                COMPUTATIONAL_LOAD_PROFILE_RANGE,
+                f"computational_load_profiles row {row}: it_pe_fraction must be finite and in [0, 1]",
+            )
+        elif it_value is not None and not 0.0 <= it_value <= 1.0:
+            _error(
+                report,
+                COMPUTATIONAL_LOAD_PROFILE_RANGE,
+                f"computational_load_profiles row {row}: it_pe_fraction must be finite and in [0, 1]",
+            )
+        if cooling is not None and cooling[row] is not None and cool_value is None:
+            _error(
+                report,
+                COMPUTATIONAL_LOAD_PROFILE_RANGE,
+                f"computational_load_profiles row {row}: cooling_fraction must be finite and in [0, 1]",
+            )
+        elif cool_value is not None and not 0.0 <= cool_value <= 1.0:
+            _error(
+                report,
+                COMPUTATIONAL_LOAD_PROFILE_RANGE,
+                f"computational_load_profiles row {row}: cooling_fraction must be finite and in [0, 1]",
+            )
+        if it_value is not None and cool_value is not None and it_value + cool_value > 1.0 + 1e-6:
+            _error(
+                report,
+                COMPUTATIONAL_LOAD_PROFILE_RANGE,
+                f"computational_load_profiles row {row}: it_pe_fraction + cooling_fraction must be <= 1",
+            )
+        if trip is not None and trip[row] is not None:
+            trip_value = _finite(trip[row])
+            if trip_value is None or not (0.0 < trip_value <= 2.0):
+                _error(
+                    report,
+                    COMPUTATIONAL_LOAD_PROFILE_RANGE,
+                    f"computational_load_profiles row {row}: cooling_trip_v_pu must be finite and in (0, 2]",
+                )
+        count_value: int | None = None
+        if sag_count is not None and sag_count[row] is not None:
+            raw_count = sag_count[row]
+            if isinstance(raw_count, bool) or not isinstance(raw_count, int) or raw_count < 0 or raw_count > 255:
+                _error(
+                    report,
+                    COMPUTATIONAL_LOAD_PROFILE_RANGE,
+                    f"computational_load_profiles row {row}: multi_sag_count must be an integer in 0..255",
+                )
+            else:
+                count_value = raw_count
+        window_value: float | None = None
+        if sag_window is not None and sag_window[row] is not None:
+            window_value = _finite(sag_window[row])
+            if window_value is None or window_value < 0.0:
+                _error(
+                    report,
+                    COMPUTATIONAL_LOAD_PROFILE_RANGE,
+                    f"computational_load_profiles row {row}: multi_sag_window_s must be finite and >= 0",
+                )
+                window_value = None
+        if count_value is not None and count_value > 0 and (window_value is None or window_value <= 0.0):
+            _error(
+                report,
+                COMPUTATIONAL_LOAD_PROFILE_RANGE,
+                f"computational_load_profiles row {row}: multi_sag_window_s must be > 0 when multi_sag_count is set",
+            )
+        if presets is not None and presets[row] is not None:
+            preset = presets[row]
+            text = preset.strip() if isinstance(preset, str) else ""
+            if not isinstance(preset, str) or text == "" or text != preset or any(ch.isspace() for ch in preset):
+                _error(
+                    report,
+                    COMPUTATIONAL_LOAD_PROFILE_RANGE,
+                    f"computational_load_profiles row {row}: envelope_preset must be a non-empty identifier",
+                )
+            elif known and preset not in known:
+                report.warnings.append(
+                    Finding(
+                        message=(
+                            f"computational_load_profiles row {row}: unrecognized envelope_preset {preset!r}"
+                        ),
+                        code=UNRECOGNIZED_ENVELOPE_PRESET,
+                    )
+                )
+        if verified is not None and verified[row] is not None:
+            raw_verified = verified[row]
+            if isinstance(raw_verified, bool) or not isinstance(raw_verified, int) or raw_verified < 0:
+                _error(
+                    report,
+                    COMPUTATIONAL_LOAD_PROFILE_RANGE,
+                    f"computational_load_profiles row {row}: model_verified_unix must be >= 0",
+                )
+
+
 def check_feature_warnings(loaded: LoadedFile, contract: dict[str, Any], report: ValidationReport) -> None:
     metadata = loaded.metadata
     if metadata.get("raptrix.features.dc_converters") != "true":
@@ -450,7 +601,11 @@ def check_feature_warnings(loaded: LoadedFile, contract: dict[str, Any], report:
 
 
 def validate_loaded(loaded: LoadedFile, contract: dict[str, Any] | None = None) -> ValidationReport:
-    contract = contract if contract is not None else load_contract()
+    if contract is None:
+        stamp = _version_stamp(loaded.metadata)
+        contract = contract_for_stamp(stamp) if stamp is not None else None
+        if contract is None:
+            contract = load_contract()
     report = ValidationReport(path=loaded.path)
     for finding in loaded.findings:
         if finding.code:
@@ -466,6 +621,7 @@ def validate_loaded(loaded: LoadedFile, contract: dict[str, Any] | None = None) 
     check_facts(loaded, report)
     check_dynamics(loaded, contract, report)
     check_bus_references(loaded, contract, report)
+    check_computational_load_profiles(loaded, contract, report)
     check_dynamics_generator_warning(loaded, report)
     check_feature_warnings(loaded, contract, report)
     report.solved = describe_solved(loaded)

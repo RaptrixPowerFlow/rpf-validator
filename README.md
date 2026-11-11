@@ -176,9 +176,9 @@ The suite is local. It does not use a network, a solver, or any file outside thi
 
 ## What a pass means
 
-A pass means the file matches the vendored v0.14.5 reader contract.
+A pass means the file matches the vendored reader contract for its stamp (`v0.14.6` or `v0.14.5`).
 
-- The version stamp is `v0.14.5` or `0.14.5`.
+- The version stamp is `v0.14.6`, `0.14.6`, `v0.14.5`, or `0.14.5`.
 - The 18 canonical tables are present, plus `dc_converters`, even when a table has zero rows.
 - Known tables match a contract column layout or a documented read dialect. Tables are matched by name.
 - Case mode, solved-state presence, and the solved tables agree. `hour_ahead_advisory` is accepted and treated as a planning mode.
@@ -187,7 +187,7 @@ A pass means the file matches the vendored v0.14.5 reader contract.
 
 A pass does not mean the network solves, the voltages are credible, or the fingerprint was recomputed.
 
-The full rule list and the snapshot pin are in [docs/CONTRACT.md](docs/CONTRACT.md). The snapshot is `raptrix-cim-rs` commit `0d4d48f`.
+The full rule list and the snapshot pins are in [docs/CONTRACT.md](docs/CONTRACT.md). The v0.14.5 snapshot is `raptrix-cim-rs` commit `0d4d48f`. The v0.14.6 snapshot adds the optional computational-load screening columns. An unrecognized `envelope_preset` warns and still passes.
 
 ## Reference files
 
